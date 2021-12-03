@@ -1,0 +1,98 @@
+<html>
+	<head>
+		<title>Jogo da Velha - Inicio</title>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&display=swap');
+			@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+			html{
+				font-family: 'Roboto', sans-serif;
+				overflow: hidden;
+			}
+
+			#header h1{
+				font-family: 'Fuzzy Bubbles', cursive;
+				text-align: center;
+			}
+
+			#container{
+				display: block;
+				top: 0; 
+				bottom: 0;
+			   	position: absolute;
+			   	width: 100%;
+			}
+
+			#player{
+				display: block;
+				position: relative;
+				width: 400px;
+    			height: 400px;
+				left: calc(50% - 200px);
+				top: 16px;
+    			background-color: #EEE;
+			}
+
+			.field{
+				display: block;
+				position: relative;
+				box-sizing: border-box;
+				width: calc(100% / 3);
+				height: calc(100% / 3);
+				border: 1px solid #333;
+				float: left;
+			}
+
+			.field:hover{
+				background-color: #e4fafa;
+				cursor: pointer;
+			}
+
+			footer{
+				position: relative;
+				text-align: center;
+				margin-top: 50px;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="header">
+				<h1>Jogo da Velha</h1>
+			</div>
+			<div id="player">
+				<div class="field">
+					
+				</div>
+				<div class="field">
+					
+				</div>
+				<div class="field">
+					
+				</div>
+				<div class="field">
+					
+				</div>
+				<div class="field">
+					
+				</div>
+				<div class="field">
+					
+				</div>
+				<div class="field">
+					
+				</div>
+				<div class="field">
+					
+				</div>
+				<div class="field">
+					
+				</div>
+			</div>
+			<footer>
+				<p>Developed by @Janadeve</p>
+			</footer>
+		</div>
+	</body>
+</html>

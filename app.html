@@ -1,6 +1,17 @@
 <html>
 	<head>
 		<title>Jogo da Velha - Inicio</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function($) {
+
+				$(".field").click(function(){
+					$(this).html("<span class='marker'>X</span>");
+				});	
+
+
+			});
+		</script>
 		<style>
 			@import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&display=swap');
 			@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
@@ -41,6 +52,9 @@
 				height: calc(100% / 3);
 				border: 1px solid #333;
 				float: left;
+				text-align: center;
+				font-family: 'Fuzzy Bubbles', cursive;
+
 			}
 
 			.field:hover{
@@ -53,6 +67,14 @@
 				text-align: center;
 				margin-top: 50px;
 			}
+
+			.marker{
+				display: block;
+				position: relative;
+				top: 10px;
+				font-size: 100px;
+			}
+
 
 		</style>
 	</head>

@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+html{
+	font-family: 'Roboto', sans-serif;
+	overflow: hidden;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 a{
 	color: #173E27;
 	font-weight: bolder;
@@ -11,10 +22,6 @@ a:hover{
 	text-decoration: underline;
 }
 
-html{
-	font-family: 'Roboto', sans-serif;
-	overflow: hidden;
-}
 
 #header h1{
 	font-family: 'Fuzzy Bubbles', cursive;

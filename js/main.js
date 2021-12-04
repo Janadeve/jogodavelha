@@ -26,6 +26,7 @@ $(document).ready(function($) {
 			toggleCanClick();
 			setCurrentField(this);
 
+			//Check if field has content
 			if($(getCurrentField()).contents().length == 0){
 				//Add the X or O into the field
 				$(this).html("<span class='marker'>" + getTypeOfMarker() + "</span>");
@@ -33,6 +34,7 @@ $(document).ready(function($) {
 				//Ensure the correct synchrony between functions (Orchestration)
 				setTimeout(function(){
 					var mtx = getMtx();
+					var resultModal = new bootstrap.Modal($('#resultModal'));
 
 					//Getting matrix's indexes of clicked field
 					var row = $(getCurrentField()).data("row");
@@ -41,15 +43,22 @@ $(document).ready(function($) {
 					//Fill the matrix with X or O
 					mtx[row][col] = getTypeOfMarker();
 
-					//Check the horizontal sequence of clicked field
-					result = checkH(row, col);
+					//Check sequences of clicked field
+					result = checkIfHasSequence(row, col);
 
 					if(result == true){
-						alert("Você Ganhou!")
+						$("#resultModal p").html("Jogador " + getTypeOfMarker() + " ganhou!");
+						resultModal.show();
+
+						setMtx([["", "", ""],["", "", ""],["", "", ""]]); 
+						$("#player .field").each(function(){
+							$(this).html("");
+						});
 					}
+
 					toggleTypeOfMarker();
 					toggleCanClick();
-				},1000);
+				},500);
 
 			}else{
 				console.log("Campo Preenchido");	
@@ -60,7 +69,5 @@ $(document).ready(function($) {
 		}
 		
 	});
-
-
 
 });

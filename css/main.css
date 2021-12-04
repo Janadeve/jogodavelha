@@ -1,7 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+/*Colors Palette*/
+:root {
+  --main-color: #22223d;
+  --second-color: #565A75;
+  --third-color: #C6B7BE;
+  --third-color2: #e3dbdf;
+  --fourth-color: #FAFBF6;
+}
+
 html{
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Roboto', sans-serif !important;
 	overflow: hidden;
 	-webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -9,16 +19,19 @@ html{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    background-color: var(--fourth-color);
 }
 
 a{
-	color: #173E27;
+	font-family: 'Roboto', sans-serif !important;
+	color: var(--second-color);
 	font-weight: bolder;
 	text-decoration: none;
 }
 
 a:hover{
-	color: #2b7449;
+	color: var(--main-color);
 	text-decoration: underline;
 }
 
@@ -26,13 +39,16 @@ a:hover{
 #header h1{
 	font-family: 'Fuzzy Bubbles', cursive;
 	text-align: center;
+	color: var(--main-color);
+	font-size: 3rem;
+	padding-top: 20px;
 }
 
 #container{
 	display: block;
 	top: 0; 
 	bottom: 0;
-   	position: absolute;
+   	position: relative;
    	width: 100%;
 }
 
@@ -52,15 +68,16 @@ a:hover{
 	box-sizing: border-box;
 	width: calc(100% / 3);
 	height: calc(100% / 3);
-	border: 1px dashed #9f9f9f;
+	border: 1px dashed var(--third-color);
 	float: left;
 	text-align: center;
 	font-family: 'Fuzzy Bubbles', cursive;
+	color: var(--main-color);
 
 }
 
 .field:hover{
-	background-color: #e4fafa;
+	background-color: var(--third-color2);
 	cursor: pointer;
 }
 
@@ -70,6 +87,7 @@ a:hover{
 	top: 10px;
 	font-size: 100px;
 }
+
 
 footer{
 	position: relative;

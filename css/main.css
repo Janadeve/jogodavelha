@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+a{
+	color: #173E27;
+	font-weight: bolder;
+	text-decoration: none;
+}
+
+a:hover{
+	color: #2b7449;
+	text-decoration: underline;
+}
+
+html{
+	font-family: 'Roboto', sans-serif;
+	overflow: hidden;
+}
+
+#header h1{
+	font-family: 'Fuzzy Bubbles', cursive;
+	text-align: center;
+}
+
+#container{
+	display: block;
+	top: 0; 
+	bottom: 0;
+   	position: absolute;
+   	width: 100%;
+}
+
+#player{
+	display: block;
+	position: relative;
+	width: 400px;
+	height: 400px;
+	left: calc(50% - 200px);
+	top: 16px;
+	background-color: #EEE;
+}
+
+.field{
+	display: block;
+	position: relative;
+	box-sizing: border-box;
+	width: calc(100% / 3);
+	height: calc(100% / 3);
+	border: 1px dashed #9f9f9f;
+	float: left;
+	text-align: center;
+	font-family: 'Fuzzy Bubbles', cursive;
+
+}
+
+.field:hover{
+	background-color: #e4fafa;
+	cursor: pointer;
+}
+
+.marker{
+	display: block;
+	position: relative;
+	top: 10px;
+	font-size: 100px;
+}
+
+footer{
+	position: relative;
+	text-align: center;
+	margin-top: 50px;
+}

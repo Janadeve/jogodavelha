@@ -1,82 +1,13 @@
 <html>
 	<head>
 		<title>Jogo da Velha - Inicio</title>
+		<meta charset="UTF-8">
+		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function($) {
-
-				$(".field").click(function(){
-					$(this).html("<span class='marker'>X</span>");
-				});	
-
-
-			});
-		</script>
-		<style>
-			@import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&display=swap');
-			@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
-
-			html{
-				font-family: 'Roboto', sans-serif;
-				overflow: hidden;
-			}
-
-			#header h1{
-				font-family: 'Fuzzy Bubbles', cursive;
-				text-align: center;
-			}
-
-			#container{
-				display: block;
-				top: 0; 
-				bottom: 0;
-			   	position: absolute;
-			   	width: 100%;
-			}
-
-			#player{
-				display: block;
-				position: relative;
-				width: 400px;
-    			height: 400px;
-				left: calc(50% - 200px);
-				top: 16px;
-    			background-color: #EEE;
-			}
-
-			.field{
-				display: block;
-				position: relative;
-				box-sizing: border-box;
-				width: calc(100% / 3);
-				height: calc(100% / 3);
-				border: 1px solid #333;
-				float: left;
-				text-align: center;
-				font-family: 'Fuzzy Bubbles', cursive;
-
-			}
-
-			.field:hover{
-				background-color: #e4fafa;
-				cursor: pointer;
-			}
-
-			footer{
-				position: relative;
-				text-align: center;
-				margin-top: 50px;
-			}
-
-			.marker{
-				display: block;
-				position: relative;
-				top: 10px;
-				font-size: 100px;
-			}
-
-
-		</style>
+		<!-- Scripts -->
+		<script type="text/javascript" src="js/main.js"></script>
+		<!-- Styles -->
+		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
 	<body>
 		<div id="container">
@@ -84,36 +15,18 @@
 				<h1>Jogo da Velha</h1>
 			</div>
 			<div id="player">
-				<div class="field">
-					
-				</div>
-				<div class="field">
-					
-				</div>
-				<div class="field">
-					
-				</div>
-				<div class="field">
-					
-				</div>
-				<div class="field">
-					
-				</div>
-				<div class="field">
-					
-				</div>
-				<div class="field">
-					
-				</div>
-				<div class="field">
-					
-				</div>
-				<div class="field">
-					
-				</div>
+				<div class="field" data-row="0" data-col="0"></div>
+				<div class="field" data-row="0" data-col="1"></div>
+				<div class="field" data-row="0" data-col="2"></div>
+				<div class="field" data-row="1" data-col="0"></div>
+				<div class="field" data-row="1" data-col="1"></div>
+				<div class="field" data-row="1" data-col="2"></div>
+				<div class="field" data-row="2" data-col="0"></div>
+				<div class="field" data-row="2" data-col="1"></div>
+				<div class="field" data-row="2" data-col="2"></div>
 			</div>
 			<footer>
-				<p>Developed by @Janadeve</p>
+				<p>Developed by <a href="https://github.com/Janadeve" target="_blank"><b>@Janadeve<b></a></p>
 			</footer>
 		</div>
 	</body>

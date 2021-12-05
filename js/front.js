@@ -2,21 +2,52 @@ var canClick = true; // - Flag of allow click in player of game
 var currentField; // - Current clicked field
 var currentCoordinates = {col: "", row: ""};
 
+function doMove(element){
+	if(getCanClick()){
+			toggleCanClick();
+			incrementTurns();
+			var col, row;
+			col = $(element).data("col");
+			row = $(element).data("row");
+			setCurrentCoordinates(col, row);
+			setCurrentField(element);
+			if(!isFilledField()){
+				fillInterfaceMatrix(col, row);
+				fillMatrix();
+				if(!hasWinner()){
+					if(isGameOver()){
+						var resultModal = new bootstrap.Modal($('#resultModal'));
+						$("#resultModal p").html("Game Over!");
+						resultModal.show();
+						initGame();
+					}
+					toggleCurrentPlayer();
+				
+				toggleCanClick();
+			}else{
+				console.log("Campo Preenchido");	
+				toggleCanClick();
+			}	
+		}else{
+			console.log("Aguarde o processamento");
+		}
+	}
+}
+
 function getCurrentCoordinates(){
 	return currentCoordinates;
 }
 
-function setCurrentCoordinates(coordinates){
-	currentCoordinates = coordinates;
+function setCurrentCoordinates(col, row){
+	currentCoordinates = {col: col, row: row};
 }
 
 function getCurrentField(){
 	return currentField;
 }
 
-function setCurrentField(clickedElement){
-	currentField = clickedElement;
-	setCurrentCoordinates({row: $(currentField).data("row"), col: $(currentField).data("col")});
+function setCurrentField(element){
+	currentField = element;
 }
 
 function getCanClick(){
@@ -25,7 +56,7 @@ function getCanClick(){
 
 function showWinner(){
 	var resultModal = new bootstrap.Modal($('#resultModal'));
-	$("#resultModal p").html("Jogador " + getCurrentPlayer() + " ganhou!");
+	$("#resultModal p").html("<center>Jogador " + getCurrentPlayer() + " ganhou!</center>");
 	resultModal.show();
 }
 
@@ -34,9 +65,9 @@ function toggleCanClick(){
 	return canClick;
 }
 
-function fillInterfaceMatrix(element){
+function fillInterfaceMatrix(col, row){
 	//Add the X or O into the field
-	$(element).html("<span class='marker'>" + getCurrentPlayer() + "</span>");
+	$("#player .field[data-col = '" + col + "'][data-row='" + row + "']").html("<span class='marker'>" + getCurrentPlayer() + "</span>");
 }
 
 function isFilledField(){

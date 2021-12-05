@@ -56,8 +56,8 @@ function fillMatrix(){
 	var mtx = getMtx();
 
 	//Getting matrix's indexes of clicked field
-	var row = $(getCurrentField()).data("row");
-	var col = $(getCurrentField()).data("col");
+	var row = getCurrentCoordinates().row;
+	var col = getCurrentCoordinates().col;
 
 	//Fill the matrix with X or O
 	mtx[row][col] = getCurrentPlayer();

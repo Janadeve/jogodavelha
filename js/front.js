@@ -1,38 +1,7 @@
 var canClick = true; // - Flag of allow click in player of game
 var currentField; // - Current clicked field
 var currentCoordinates = {col: "", row: ""};
-
-function doMove(element){
-	if(getCanClick()){
-			toggleCanClick();
-			incrementTurns();
-			var col, row;
-			col = $(element).data("col");
-			row = $(element).data("row");
-			setCurrentCoordinates(col, row);
-			setCurrentField(element);
-			if(!isFilledField()){
-				fillInterfaceMatrix(col, row);
-				fillMatrix();
-				if(!hasWinner()){
-					if(isGameOver()){
-						var resultModal = new bootstrap.Modal($('#resultModal'));
-						$("#resultModal p").html("Game Over!");
-						resultModal.show();
-						initGame();
-					}
-					toggleCurrentPlayer();
-				
-				toggleCanClick();
-			}else{
-				console.log("Campo Preenchido");	
-				toggleCanClick();
-			}	
-		}else{
-			console.log("Aguarde o processamento");
-		}
-	}
-}
+var bestCoordinates = "";
 
 function getCurrentCoordinates(){
 	return currentCoordinates;
@@ -65,9 +34,9 @@ function toggleCanClick(){
 	return canClick;
 }
 
-function fillInterfaceMatrix(col, row){
+function fillInterfaceMatrix(col, row, player){
 	//Add the X or O into the field
-	$("#player .field[data-col = '" + col + "'][data-row='" + row + "']").html("<span class='marker'>" + getCurrentPlayer() + "</span>");
+	$("#player .field[data-col = '" + col + "'][data-row='" + row + "']").html("<span class='marker'>" + player + "</span>");
 }
 
 function isFilledField(){
@@ -89,4 +58,46 @@ function isGameOver(){
 		result = true;
 	}
 	return result;
+}
+
+function doMoveAI(){
+	var auxMtx = getMtx().slice(0);
+	bestCoordinates = minimax(auxMtx, "O").coordinates;
+	fillMatrix(bestCoordinates.col, bestCoordinates.row, "O");
+	fillInterfaceMatrix(bestCoordinates.col, bestCoordinates.row, "O");
+	setCurrentCoordinates(bestCoordinates.col, bestCoordinates.row);
+	getAvailableFields(getMtx());
+	hasWinner();
+}
+
+function doMove(element){
+	if(getCanClick()){
+			toggleCanClick();
+			incrementTurns();
+			col = $(element).data("col");
+			row = $(element).data("row");
+			setCurrentCoordinates(col, row);
+			setCurrentField(element);
+			if(!isFilledField()){
+				fillInterfaceMatrix(col, row, "X");
+				fillMatrix(col, row, "X");
+				if(winning(getMtx(), "X")){
+					if(isGameOver()){
+						var resultModal = new bootstrap.Modal($('#resultModal'));
+						$("#resultModal p").html("Game Over!");
+						resultModal.show();
+						initGame();
+					}
+					toggleCurrentPlayer();
+				}else{
+					hasWinner();
+				}
+				toggleCanClick();
+			}else{
+				console.log("Campo Preenchido");	
+				toggleCanClick();
+			}	
+		}else{
+			console.log("Aguarde o processamento");
+		}
 }

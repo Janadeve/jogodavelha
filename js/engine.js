@@ -1,6 +1,15 @@
 var mtx = [["", "", ""],["", "", ""],["", "", ""]]; // - Matrix of round game
 var currentPlayer = 'X';
 var turns = 0;
+var IABlocked = false;
+
+function getIABlocked(){
+	return IABlocked;
+}
+
+function setIABlocked(novoValor){
+	IABlocked = novoValor;
+}
 
 
 function getTurns(){
@@ -38,8 +47,7 @@ function setMtx(value){
 function hasWinner(){
 	if(hasSequence()){
 		showWinner();
-		initGame();
-
+		setIABlocked(true);
 		return true;
 	}else{
 		return false;
@@ -163,6 +171,7 @@ function minimax(newBoard, player){
 }
 
 function initGame(){
+	setIABlocked(false);
 	initMatrizes();
 	setCurrentPlayer('X');
 	resetTurns();

@@ -27,6 +27,7 @@ function showWinner(){
 	var resultModal = new bootstrap.Modal($('#resultModal'));
 	$("#resultModal p").html("<center>Jogador " + getCurrentPlayer() + " ganhou!</center>");
 	resultModal.show();
+	return false;
 }
 
 function toggleCanClick(){
@@ -37,6 +38,9 @@ function toggleCanClick(){
 function fillInterfaceMatrix(col, row, player){
 	//Add the X or O into the field
 	$("#player .field[data-col = '" + col + "'][data-row='" + row + "']").html("<span class='marker'>" + player + "</span>");
+	setTimeout(function(){
+		$(".overlay-loading").fadeOut();
+	}, 1500);
 }
 
 function isFilledField(){
@@ -61,13 +65,21 @@ function isGameOver(){
 }
 
 function doMoveAI(){
-	var auxMtx = getMtx().slice(0);
-	bestCoordinates = minimax(auxMtx, "O").coordinates;
-	fillMatrix(bestCoordinates.col, bestCoordinates.row, "O");
-	fillInterfaceMatrix(bestCoordinates.col, bestCoordinates.row, "O");
-	setCurrentCoordinates(bestCoordinates.col, bestCoordinates.row);
-	getAvailableFields(getMtx());
-	hasWinner();
+	if(!getIABlocked()){
+		var auxMtx = getMtx().slice(0);
+		bestCoordinates = minimax(auxMtx, "O").coordinates;
+		if(bestCoordinates == undefined && getAvailableFields.length != 0){
+			var resultModal = new bootstrap.Modal($('#resultModal'));
+			$("#resultModal p").html("DESISTO!!! Você me pegou, mas estou treinando muito, logo vou te vencer.");
+			resultModal.show();
+		}
+		fillMatrix(bestCoordinates.col, bestCoordinates.row, "O");
+		fillInterfaceMatrix(bestCoordinates.col, bestCoordinates.row, "O");
+		setCurrentCoordinates(bestCoordinates.col, bestCoordinates.row);
+		getAvailableFields(getMtx());
+		hasWinner();
+		$(".overlay-loading").fadeOut();
+	}
 }
 
 function doMove(element){
@@ -87,7 +99,9 @@ function doMove(element){
 						$("#resultModal p").html("Game Over!");
 						resultModal.show();
 						initGame();
+						return false;
 					}
+					return true;
 					toggleCurrentPlayer();
 				}else{
 					hasWinner();
@@ -96,8 +110,10 @@ function doMove(element){
 			}else{
 				console.log("Campo Preenchido");	
 				toggleCanClick();
+				return false;
 			}	
 		}else{
 			console.log("Aguarde o processamento");
+			return false;
 		}
 }

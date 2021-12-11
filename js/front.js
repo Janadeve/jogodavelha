@@ -65,22 +65,65 @@ function isGameOver(){
 }
 
 function doMoveAI(){
-	if(!getIABlocked()){
-		var auxMtx = getMtx().slice(0);
-		bestCoordinates = minimax(auxMtx, "O").coordinates;
-		if(bestCoordinates == undefined && getAvailableFields.length != 0){
-			var resultModal = new bootstrap.Modal($('#resultModal'));
-			$("#resultModal p").html("DESISTO!!! Você me pegou, mas estou treinando muito, logo vou te vencer.");
-			resultModal.show();
+	$(".overlay-loading").fadeIn();
+	if(getAvailableFields(getMtx()).length == 9){
+		randNumberCol = Math.floor(Math.random() * 3);
+		randNumberRow = Math.floor(Math.random() * 3);
+
+		setCurrentPlayer('O');
+		fillMatrix(randNumberCol, randNumberRow, "O");
+		fillInterfaceMatrix(randNumberCol, randNumberRow, "O");
+		setCurrentCoordinates(randNumberCol, randNumberRow);
+
+		setTimeout(function(){
+			if(winning(getMtx(), "O")){
+				setLastWinner("O")
+				showWinner();
+			}
+		}, 600);
+	}else{
+		if(!getIABlocked()){
+			var auxMtx = getMtx().slice(0);
+			bestCoordinates = minimax(auxMtx, "O").coordinates;
+			if(getAvailableFields(getMtx()).length == 0){
+				showTieResult();
+			}else if(bestCoordinates == undefined){
+				var resultModal = new bootstrap.Modal($('#resultModal'));
+				$("#resultModal p").html("DESISTO!!! Você me pegou, mas estou treinando muito, logo vou te vencer.");
+				resultModal.show();
+			}else{
+				setCurrentPlayer('O');
+				fillMatrix(bestCoordinates.col, bestCoordinates.row, "O");
+				fillInterfaceMatrix(bestCoordinates.col, bestCoordinates.row, "O");
+				setCurrentCoordinates(bestCoordinates.col, bestCoordinates.row);
+				setTimeout(function(){
+					if(winning(mtx, "O")){
+						setLastWinner("O")
+						showWinner();
+					}else if(winning(mtx, "X")){
+						setLastWinner("X")
+						showWinner();
+					}else if(getAvailableFields(getMtx()).length == 0){
+						setLastWinner(null);
+						showTieResult();
+					}
+				}, 600);
+				
+			}
+
+			$(".overlay-loading").fadeOut();
 		}
-		fillMatrix(bestCoordinates.col, bestCoordinates.row, "O");
-		fillInterfaceMatrix(bestCoordinates.col, bestCoordinates.row, "O");
-		setCurrentCoordinates(bestCoordinates.col, bestCoordinates.row);
-		getAvailableFields(getMtx());
-		hasWinner();
-		$(".overlay-loading").fadeOut();
+		
 	}
 }
+
+
+function showTieResult(){
+	var resultModal = new bootstrap.Modal($('#resultModal'));
+	$("#resultModal p").html("Tie - Deu velha!");
+	resultModal.show();
+}
+
 
 function doMove(element){
 	if(getCanClick()){

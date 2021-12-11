@@ -1,7 +1,17 @@
+// var mtx = [["O", "", "O"],["O", "X", "O"],["X", "", "X"]]; // - Matrix of round game
 var mtx = [["", "", ""],["", "", ""],["", "", ""]]; // - Matrix of round game
-var currentPlayer = 'X';
+var currentPlayer = 'O';
 var turns = 0;
 var IABlocked = false;
+var lastWinner = null;
+
+function getLastWinner(){
+	return lastWinner;
+}
+
+function setLastWinner(winner){
+	lastWinner = winner;
+}
 
 function getIABlocked(){
 	return IABlocked;
@@ -46,6 +56,7 @@ function setMtx(value){
 
 function hasWinner(){
 	if(hasSequence()){
+		setLastWinner(getCurrentPlayer());
 		showWinner();
 		setIABlocked(true);
 		return true;
@@ -59,6 +70,9 @@ function getAvailableFields(newBoard){
 	var col = 0;
 	var row = 0;
 	var cont = 0;
+	if(newBoard == undefined || newBoard.length == 0){
+		console.log("Aqui" + timesEnterFunctionMinimax);
+	}
 	newBoard.forEach(function(item){
 		item.forEach(function(subItem){
 			if(subItem == ""){
@@ -73,16 +87,21 @@ function getAvailableFields(newBoard){
 	return myAvailFields;
 }
 
+// 00	01	02
+// 10	11	12	
+// 20	21	22
+
+
 function winning(board, player){
 	if (
 	(board[0][0] == player && board[0][1] == player && board[0][2] == player) ||
 	(board[1][0] == player && board[1][1] == player && board[1][2] == player) ||
 	(board[2][0] == player && board[2][1] == player && board[2][2] == player) ||
 	(board[0][0] == player && board[1][0] == player && board[2][0] == player) ||
-	(board[1][0] == player && board[1][1] == player && board[1][2] == player) ||
-	(board[2][0] == player && board[2][2] == player && board[2][2] == player) ||
+	(board[0][1] == player && board[1][1] == player && board[2][1] == player) ||
+	(board[0][2] == player && board[1][2] == player && board[2][2] == player) ||
 	(board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
-	(board[2][0] == player && board[2][2] == player && board[2][0] == player)){
+	(board[2][0] == player && board[1][1] == player && board[0][2] == player)){
 		return true;
 	}else{
 		return false;
@@ -99,7 +118,9 @@ function setMoves(newMoves){
 	moves = newMoves;
 }
 
+var timesEnterFunctionMinimax = 0;
 function minimax(newBoard, player){
+	console.log(timesEnterFunctionMinimax++);
 	//available spots
   	var availFields = getAvailableFields(newBoard);
 
@@ -166,15 +187,28 @@ function minimax(newBoard, player){
    		 }
   	}
 
-	// return the chosen move (object) from the array to the higher depth
   	return bestMove;
 }
 
 function initGame(){
 	setIABlocked(false);
 	initMatrizes();
-	setCurrentPlayer('X');
 	resetTurns();
+	if(lastWinner == 'X'){
+		setCurrentPlayer('X');	
+	}else if(lastWinner == 'O'){
+		setCurrentPlayer('O');
+		setTimeout(function(){
+			doMoveAI();
+		}, 600);
+	}else{
+		toggleCurrentPlayer();
+		if(getCurrentPlayer() == 'O'){
+			$(".overlay-loading").fadeIn();
+			doMoveAI();
+		}
+	}
+	
 }
 
 

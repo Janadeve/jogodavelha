@@ -27,9 +27,10 @@
 				<h1>Jogo da Velha</h1>
 			</div>
 			<div id="selectGameModeScreen">
-				<div>
-					<button type="button" onclick="setGameMode(1)">1 Jogador</button>
-					<button type="button" onclick="setGameMode(2)">2 Jogadores</button>	
+				<div class="btn-group-toggle"  role="group">
+				  <button id="gameMode2" type="button" class="btn btn-secondary" onclick="setGameMode(2)" disabled>2 Jogadores</button>
+				  <button id="gameMode1" type="button" class="btn btn-secondary" onclick="setGameMode(1)" disabled>1 Jogador</button>
+				  <button id="newGame" type="button" onclick="newGame()"class="btn btn-warning">Novo Jogo</button>	
 				</div>
 			</div>
 			<div id="player">

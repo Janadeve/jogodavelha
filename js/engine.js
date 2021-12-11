@@ -9,12 +9,47 @@ function getGameMode(){
 	return gameMode;
 } 
 
+function newGame(){
+	$("#selectGameModeScreen #gameMode1").prop('disabled', false);
+	$("#selectGameModeScreen #gameMode2").prop('disabled', false);
+
+	$("#selectGameModeScreen #gameMode1").removeClass('btn-primary');
+	$("#selectGameModeScreen #gameMode1").addClass('btn-secondary');
+	$("#selectGameModeScreen #gameMode2").removeClass('btn-primary');
+	$("#selectGameModeScreen #gameMode2").addClass('btn-secondary');
+
+	initGame();
+}
+
 //Quando troca o modo de jogo voltamos para o X e o jogo reseta
 function setGameMode(newGameMode){
 	gameMode = newGameMode;
+
+	if(newGameMode == 1){
+		$("#selectGameModeScreen #gameMode1").removeClass('btn-secondary');
+		$("#selectGameModeScreen #gameMode1").addClass('btn-primary');
+		$("#selectGameModeScreen #gameMode2").removeClass('btn-primary');
+		$("#selectGameModeScreen #gameMode2").addClass('btn-secondary');
+		$("#player").css("cursor", "pointer");
+		$("#player .field").css("cursor", "pointer");
+	}
+
+	if(newGameMode == 2){
+		$("#selectGameModeScreen #gameMode1").removeClass('btn-primary');
+		$("#selectGameModeScreen #gameMode1").addClass('btn-secondary');
+		$("#selectGameModeScreen #gameMode2").removeClass('btn-secondary');
+		$("#selectGameModeScreen #gameMode2").addClass('btn-primary');
+		$("#player").css("cursor", "pointer");
+		$("#player .field").css("cursor", "pointer");
+	}
+
+	$("#selectGameModeScreen #gameMode1, #selectGameModeScreen #gameMode2").css("cursor", "not-allowed");
+	$("#selectGameModeScreen #gameMode1, #selectGameModeScreen #gameMode2").css("pointer-events", "none");
+
+	$("#player").css("pointer-events", "auto");
+
 	setCurrentPlayer('X');
 	setLastWinner(null);
-	initGame();
 }
 
 function getLastWinner(){

@@ -56,6 +56,9 @@ function isFilledField(){
 }
 
 function doMove(element){
+	if(getGameMode() == 1){
+		$(".overlay-loading").fadeIn();
+	}
 	if(getCanClick()){
 			//Travando o click durante o processamento
 			toggleCanClick();
@@ -85,6 +88,10 @@ function doMove(element){
 				}else{
 					//Se não existir mais campos
 					if(getAvailableFields(getMtx()).length == 0){
+						//Setando ultimo jogador como null
+						setLastWinner(null);
+						//Trocando o jogador
+						toggleCurrentPlayer();
 						showTieResult();
 					}else{
 						//Liberando a proxima jogada
@@ -96,8 +103,10 @@ function doMove(element){
 						if(getGameMode() == 1){
 							//Liberando a AI
 							setIABlocked(false);
-							//Mandando a AI jogar
-							doMoveAI();
+							setTimeout(function(){
+								//Mandando a AI jogar
+								doMoveAI();
+							}, 600);
 						}
 
 					}
@@ -161,7 +170,10 @@ function doMoveAI(){
 				}
 			}, 600);
 		}else{
+			//Setando ultimo jogador como null
 			setLastWinner(null);
+			//Trocando o jogador
+			toggleCurrentPlayer();
 			showTieResult();
 		}
 		

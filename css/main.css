@@ -59,7 +59,7 @@ a:hover{
 	width: 400px;
 	height: 400px;
 	background-color: #EEE;
-	padding: 
+	cursor: not-allowed;
 }
 
 .field{
@@ -73,12 +73,13 @@ a:hover{
 	text-align: center;
 	font-family: 'Fuzzy Bubbles', cursive;
 	color: var(--main-color);
+	cursor: not-allowed;
 
 }
 
 .field:hover{
 	background-color: var(--third-color2);
-	cursor: pointer;
+	cursor: not-allowed;
 }
 
 .marker{
@@ -159,4 +160,13 @@ footer{
     border-bottom: 1px solid #CCC; 
     background: rgb(212,212,212);
 	background: linear-gradient(0deg, #dfdfdf 0%, #ffffff 100%);
+	
+}
+
+#selectGameModeScreen #gameMode1, #selectGameModeScreen #gameMode2{
+	pointer-events: none;
+}
+
+#selectGameModeScreen #newGame{
+	pointer-events: auto;
 }

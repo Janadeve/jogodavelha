@@ -8,6 +8,15 @@ $(document).ready(function($) {
 		}
 	});
 
+
+	$("#selectGameModeScreen #newGame").click(function(){
+		$("#selectGameModeScreen #gameMode1, #selectGameModeScreen #gameMode2").css({
+			"cursor": 'pointer',
+			"pointer-events": 'auto',
+			"opacity" : '100'
+		});
+	});
+
 	$("#selectGameModeScreen #gameMode1").click(function(){
 		if($(this).css("cursor") == "not-allowed"){
 			event.preventDefault();
@@ -24,10 +33,4 @@ $(document).ready(function($) {
 		}
 	});
 
-	$("#selectGameModeScreen #newGame").click(function(){
-		$("#selectGameModeScreen #gameMode1, #selectGameModeScreen #gameMode2").css({
-			"cursor": 'pointer',
-			"pointer-events": 'auto'
-		});
-	});
 });

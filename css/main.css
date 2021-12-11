@@ -164,6 +164,7 @@ footer{
 }
 
 #selectGameModeScreen #gameMode1, #selectGameModeScreen #gameMode2{
+	opacity: 0;
 	pointer-events: none;
 }
 

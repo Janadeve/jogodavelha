@@ -13,11 +13,21 @@
 		<script type="text/javascript" src="js/gameControls.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 		<!-- Styles -->
-		<link rel="stylesheet" type="text/css" href="css/main.css">
 		<link rel="stylesheet" type="text/css" href="css/player.css">
 		<!-- favicon -->
 		<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+		
+		<!-- NES.CSS -->
+		<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    	<link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+		<!-- minify -->
+		<link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+		<!-- latest -->
+		<link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+		<!-- core style only -->
+		<link href="https://unpkg.com/nes.css/css/nes-core.min.css" rel="stylesheet" />
+
+		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
 	<body>
 		<div id="container">
@@ -30,9 +40,16 @@
 			</div>
 			<div id="selectGameModeScreen" class="clearfix">
 				<div id="controlBar" class="btn-group-toggle" class="d-flex justify-content-center" role="group">
-				  <button id="gameModeBtn2" type="button" class="btn" onclick="setGameMode(2)">Jogar com um amigo</button>
-				  <button id="gameModeBtn1" type="button" class="btn" onclick="setGameMode(1)">Enfrentar AI</button>
-				  <button id="goBackBtn" type="button" onclick="goBack()" class="btn btn-info">Novo Jogo</button>	
+					<button id="startBtn" onclick="startGame(event)" type="button" class="nes-btn is-disabled">Start</button>
+				  	<label id="gameModeBtn2">
+					  <input type="radio" class="nes-radio" name="answer" onclick="setGameMode(2)"/>
+					  <span>Jogar com um amigo</span>
+					</label>
+					<label id="gameModeBtn1" >
+					  <input type="radio" class="nes-radio" name="answer" onclick="setGameMode(1)"/>
+					  <span>Enfrentar AI</span>
+					</label>
+				  	<button id="goBackBtn" onclick="goBack()" type="button" class="nes-btn is-disabled">Cancelar</button>
 				</div>
 			</div>
 			<div id="player">
@@ -45,16 +62,25 @@
 				<div class="field" data-row="2" data-col="0"></div>
 				<div class="field" data-row="2" data-col="1"></div>
 				<div class="field" data-row="2" data-col="2"></div>
-				<div id="playerOverlay">
-					<button id="newGameBtn" type="button" onclick="newGame()" class="btn btn-info">Novo Jogo</button>
-					<button id="startBtn" type="button" onclick="startGame()" class="btn btn-info">Start</button>
-				</div>
-				
+				<div id="playerOverlay"></div>
 			</div>
 			
 			<footer>
 				<p>Developed by <a href="https://github.com/Janadeve" target="_blank"><b>@Janadeve<b></a> & <a href="https://github.com/romagnolocesar" target="_blank"><b>@CesarRomagnolo<b></a></p>
 			</footer>
+
+			<!-- MODAL SELECIONE UM MODO DE JOGO -->
+			<section>
+			  <dialog class="nes-dialog" id="select-game-mode-modal">
+			    <form method="dialog">
+			      <p class="title">Alerta</p>
+			      <p>Você precisa escolher um modo de jogo ao lado.</p>
+			      <menu class="dialog-menu">
+			        <button class="nes-btn is-primary">OK</button>
+			      </menu>
+			    </form>
+			  </dialog>
+			</section>
 
 			<!-- MODAL Result message -->
 			<div id="resultModal" class="modal" tabindex="-1">

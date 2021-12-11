@@ -35,25 +35,15 @@ function getGameMode(){
 function setGameMode(newGameMode){
 	gameMode = newGameMode;
 
-	$("#newGameBtn").hide();
-	$("#startBtn").show();
+	$("#startBtn").removeClass("is-disabled");
+	$("#startBtn").addClass("is-success");
 
 	if(newGameMode == 1){
-		$("#selectGameModeScreen #gameModeBtn1").removeClass('btn-secondary');
-		$("#selectGameModeScreen #gameModeBtn1").addClass('btn-primary');
-		$("#selectGameModeScreen #gameModeBtn2").removeClass('btn-primary');
-		$("#selectGameModeScreen #gameModeBtn2").addClass('btn-secondary');
-		$("#player").css("cursor", "pointer");
-		$("#player .field").css("cursor", "pointer");
+		
 	}
 
 	if(newGameMode == 2){
-		$("#selectGameModeScreen #gameModeBtn1").removeClass('btn-primary');
-		$("#selectGameModeScreen #gameModeBtn1").addClass('btn-secondary');
-		$("#selectGameModeScreen #gameModeBtn2").removeClass('btn-secondary');
-		$("#selectGameModeScreen #gameModeBtn2").addClass('btn-primary');
-		$("#player").css("cursor", "pointer");
-		$("#player .field").css("cursor", "pointer");
+		
 	}
 
 	$("#player").css("pointer-events", "auto");

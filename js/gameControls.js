@@ -1,34 +1,33 @@
-function newGame(){
-	$("#controlBar #gameModeBtn1").addClass('btn-secondary');
-	$("#controlBar #gameModeBtn2").addClass('btn-secondary');
+function startGame(event){
+	if($("#startBtn").hasClass('is-disabled')){
+		document.getElementById('select-game-mode-modal').showModal();
+		event.preventDefault();
+	}else{
+		$("#playerOverlay").hide();
+		$("#gameModeBtn1, #gameModeBtn2").attr('disabled','disabled');
+		$("#gameModeBtn1 input, #gameModeBtn2 input").attr('disabled','disabled');
 
-	$("#controlBar #gameModeBtn1").css('opacity', '1');
-	$("#controlBar #gameModeBtn2").css('opacity', '1');
-	$("#newGameBtn").hide();
+		$("#startBtn").removeClass('is-success');
+		$("#startBtn").addClass('is-disabled');
 
-
-	$("#controlBar #gameModeBtn2, #controlBar #gameModeBtn1").css('pointer-events', 'auto');
-
-	initGame();
-}
-
-function startGame(){
-	$("#playerOverlay").hide();
-	$("#controlBar #gameModeBtn2, #controlBar #gameModeBtn1").css('opacity', '0');
-	$("#controlBar #newGameBar").hide();
-	$("#goBackBtn").show();
+		$("#goBackBtn").removeClass('is-disabled');
+		$("#goBackBtn").addClass('is-warning');
+	}
 
 }
 
 function goBack(){
+	if($("#goBackBtn").hasClass('is-disabled')){
+		event.preventDefault();
+	}else{
+		$("#playerOverlay").show();
+		$("#gameModeBtn1, #gameModeBtn2").removeAttr('disabled');
+		$("#gameModeBtn1 input, #gameModeBtn2 input").removeAttr('disabled');
 
-	$("#goBackBtn").hide();
-	$("#playerOverlay").show();
-	$("#startBtn").hide();
-	$("#newGameBtn").show();
+		$("#goBackBtn").removeClass('is-warning');
+		$("#goBackBtn").addClass('is-disabled');
 
-	initInterfaceMatrix();
-	initGameMatrix();
-	
-	
+		initInterfaceMatrix();
+		initGameMatrix();
+	}
 };

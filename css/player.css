@@ -1,0 +1,58 @@
+#player{
+	display: block;
+	position: relative;
+	margin: 0.5rem auto;
+	width: 400px;
+	height: 400px;
+	background-color: #EEE;
+}
+
+#playerOverlay{
+	width: 100%;
+    height: 100%;            
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.8;  /* for demo purpose  */
+    background-color: #202020;
+}
+
+#playerOverlay #newGameBtn{
+	margin: 0;
+  	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	-ms-transform: translateY(-50%) translateX(-50%);
+  	transform: translateY(-50%) translateX(-50%);
+}
+
+#playerOverlay #startBtn{
+	margin: 0;
+  	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	-ms-transform: translateY(-50%) translateX(-50%);
+  	transform: translateY(-50%) translateX(-50%);
+  	display: none;
+}
+
+#selectGameModeScreen{
+	display: block;
+	position: relative;
+	margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid #CCC; 
+    background: rgb(212,212,212);
+	background: linear-gradient(0deg, #dfdfdf 0%, #ffffff 100%);
+	
+}
+
+#controlBar #gameModeBtn1, #controlBar #gameModeBtn2{
+	opacity: 0;
+}
+
+#goBackBtn{
+	display: none;
+}

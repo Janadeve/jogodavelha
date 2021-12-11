@@ -4,22 +4,32 @@ var currentPlayer = 'X';
 var IABlocked = false;
 var lastWinner = null;
 var gameMode = ""; //1 = Player vs Computer; 2 = Player vs Player
+var score = {player1: 0, player2: 0};
+
+function getScore(){
+	return score;
+}
+
+function addScoreToPlayer(player){
+	if(player == "X"){
+		score.player1++;
+	}else if(player == "O"){
+		score.player2++;
+	}
+
+	return true;
+}
+
+function initScore(){
+	score.player1 = 0;
+	score.player2 = 0;
+
+	return true;
+}
 
 function getGameMode(){
 	return gameMode;
 } 
-
-function newGame(){
-	$("#selectGameModeScreen #gameModeBtn1").prop('disabled', false);
-	$("#selectGameModeScreen #gameModeBtn2").prop('disabled', false);
-
-	$("#selectGameModeScreen #gameModeBtn1").addClass('btn-secondary');
-	$("#selectGameModeScreen #gameModeBtn2").addClass('btn-secondary');
-
-	$("#selectGameModeScreen #gameModeBtn2, #selectGameModeScreen #gameModeBtn1").css('pointer-events', 'auto');
-
-	initGame();
-}
 
 //Quando troca o modo de jogo voltamos para o X e o jogo reseta
 function setGameMode(newGameMode){
@@ -199,8 +209,12 @@ function removeOverlay(){
 }
 
 function initGame(){
+	//Reiniciando as Matrizes
 	initGameMatrix();
 	initInterfaceMatrix();
+
+	//Liberando o Click do usuario
+	setCanClick(true);
 
 	if(lastWinner == 'X'){
 		setCurrentPlayer('X');	
@@ -215,6 +229,12 @@ function initGame(){
 		}
 	}else{
 		removeOverlay();
+
+		if(getGameMode() == 1 && getCurrentPlayer() == 'O'){
+			setTimeout(function(){
+				doMoveAI();
+			}, 600);
+		}
 	}
 }
 

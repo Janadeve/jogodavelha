@@ -52,16 +52,6 @@ a:hover{
    	width: 100%;
 }
 
-#player{
-	display: block;
-	position: relative;
-	margin: 0.5rem auto;
-	width: 400px;
-	height: 400px;
-	background-color: #EEE;
-	cursor: not-allowed;
-}
-
 .field{
 	display: block;
 	position: relative;
@@ -150,24 +140,3 @@ footer{
 	cursor: not-allowed;
 }
 
-#selectGameModeScreen{
-	display: block;
-	position: relative;
-	margin: 0 auto;
-    width: 100%;
-    text-align: center;
-    padding: 1rem;
-    border-bottom: 1px solid #CCC; 
-    background: rgb(212,212,212);
-	background: linear-gradient(0deg, #dfdfdf 0%, #ffffff 100%);
-	
-}
-
-#selectGameModeScreen #gameMode1, #selectGameModeScreen #gameMode2{
-	opacity: 0;
-	pointer-events: none;
-}
-
-#selectGameModeScreen #newGame{
-	pointer-events: auto;
-}

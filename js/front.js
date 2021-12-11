@@ -183,10 +183,54 @@ function doMoveAI(){
 	}
 }
 
+function startGame(){
+	$("#playerOverlay").hide();
+	$("#controlBar #gameModeBtn2, #controlBar #gameModeBtn1").css('display', 'none');
+	$("#controlBar #newGameBar").css('visibility', '1');
+	$("#goBackBtn").css("visibility", "visible")
+
+}
+
 function showTieResult(){
 	var resultModal = new bootstrap.Modal($('#resultModal'));
 	$("#resultModal p").html("Tie - Deu velha!");
 	resultModal.show();
+}
+
+function blinkElement(element) {
+    $(element).fadeOut(500);
+    $(element).fadeIn(500);
+}
+
+function goBack(){
+	console.log("entrei");
+	$("#selectGameModeScreen #gameModeBtn1, #selectGameModeScreen #gameModeBtn2").css("opacity", "hidden");
+	$("#selectGameModeScreen #gameModeBtn1, #selectGameModeScreen #gameModeBtn2").css("pointer-event", "none");
+	$("#playerOverlay #newGameBtn").css("opacity", "1");
+
+	$("#selectGameModeScreen #gameModeBtn1, #selectGameModeScreen #gameModeBtn2").css({
+		"cursor": 'pointer',
+	});
+	$("#selectGameModeScreen #gameModeBtn1, #selectGameModeScreen #gameModeBtn2").css("transition", "opacity 2s");
+	$("#selectGameModeScreen #gameModeBtn1, #selectGameModeScreen #gameModeBtn2").css("opacity", "1");
+	$("#selectGameModeScreen #gameModeBtn1, #selectGameModeScreen #gameModeBtn2").css("pointer-event", "auto");
+
+	$("#playerOverlay #newGameBtn").css("transition", "opacity 2s");
+	$("#playerOverlay #newGameBtn").css("opacity", "0");
+	
+};
+
+function newGame(){
+
+	$("#selectGameModeScreen #gameModeBtn1").prop('disabled', false);
+	$("#selectGameModeScreen #gameModeBtn2").prop('disabled', false);
+
+	$("#selectGameModeScreen #gameModeBtn1").addClass('btn-secondary');
+	$("#selectGameModeScreen #gameModeBtn2").addClass('btn-secondary');
+
+	$("#selectGameModeScreen #gameModeBtn2, #selectGameModeScreen #gameModeBtn1").css('pointer-events', 'auto');
+
+	initGame();
 }
 
 

@@ -10,9 +10,11 @@
 		<!-- Scripts -->
 		<script type="text/javascript" src="js/engine.js"></script>
 		<script type="text/javascript" src="js/front.js"></script>
+		<script type="text/javascript" src="js/gameControls.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 		<!-- Styles -->
 		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/player.css">
 		<!-- favicon -->
 		<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 		<link rel="icon" href="img/favicon.ico" type="image/x-icon">
@@ -26,11 +28,11 @@
 			<div id="header">
 				<h1>Jogo da Velha</h1>
 			</div>
-			<div id="selectGameModeScreen">
-				<div class="btn-group-toggle"  role="group">
-				  <button id="gameMode2" type="button" class="btn btn-secondary" onclick="setGameMode(2)" disabled>2 Jogadores</button>
-				  <button id="gameMode1" type="button" class="btn btn-secondary" onclick="setGameMode(1)" disabled>1 Jogador</button>
-				  <button id="newGame" type="button" onclick="newGame()"class="btn btn-warning">Novo Jogo</button>	
+			<div id="selectGameModeScreen" class="clearfix">
+				<div id="controlBar" class="btn-group-toggle" class="d-flex justify-content-center" role="group">
+				  <button id="gameModeBtn2" type="button" class="btn" onclick="setGameMode(2)">2 Jogadores</button>
+				  <button id="gameModeBtn1" type="button" class="btn" onclick="setGameMode(1)">Contra a IA</button>
+				  <button id="goBackBtn" type="button" onclick="goBack()" class="btn btn-info">Novo Jogo</button>	
 				</div>
 			</div>
 			<div id="player">
@@ -43,9 +45,15 @@
 				<div class="field" data-row="2" data-col="0"></div>
 				<div class="field" data-row="2" data-col="1"></div>
 				<div class="field" data-row="2" data-col="2"></div>
+				<div id="playerOverlay">
+					<button id="newGameBtn" type="button" onclick="newGame()" class="btn btn-info">Novo Jogo</button>
+					<button id="startBtn" type="button" onclick="startGame()" class="btn btn-info">Start</button>
+				</div>
+				
 			</div>
+			
 			<footer>
-				<p>Developed by <a href="https://github.com/Janadeve" target="_blank"><b>@Janadeve<b></a></p>
+				<p>Developed by <a href="https://github.com/Janadeve" target="_blank"><b>@Janadeve<b></a> & <a href="https://github.com/romagnolocesar" target="_blank"><b>@CesarRomagnolo<b></a></p>
 			</footer>
 
 			<!-- MODAL Result message -->

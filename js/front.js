@@ -87,7 +87,7 @@ function doMove(element){
 				if(hasWinner(getMtx(), getCurrentPlayer())){
 					setLastWinner(getCurrentPlayer())
 					showWinner(getMtx(), getCurrentPlayer());
-
+					addScoreToPlayer("X");
 				//Se o jogador não ganhou
 				}else{
 					//Se não existir mais campos
@@ -146,7 +146,8 @@ function doMoveAI(){
 		fillInterfaceMatrix(randNumberCol, randNumberRow, "O");
 		setCurrentCoordinates(randNumberCol, randNumberRow);
 
-		//Mudando o jogador - Nesse caso impossivel ganhar pois a matrix está quase completa
+		//Mudando o jogador - Nesse caso impossivel ganhar 
+		//pois a matrix está quase completa (agora tem 8 espaços somente)
 		toggleCurrentPlayer();
 	}else{
 		var auxMtx = getMtx().slice(0);
@@ -165,12 +166,18 @@ function doMoveAI(){
 			setTimeout(function(){
 				//Caso a máquina ganhe
 				if(hasSequence(getMtx(), "O")){
+					addScoreToPlayer("O");
 					setLastWinner("O")
 					showWinner();
 				//Caso ela não ganhe
 				}else{
 					//Troca o jogador
 					toggleCurrentPlayer();
+					//Setando ultimo jogador como null
+					setLastWinner(null);
+					if(getAvailableFields(getMtx()).length == 0){
+						showTieResult();	
+					}
 				}
 			}, 600);
 		}else{

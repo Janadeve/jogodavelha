@@ -236,6 +236,7 @@ function initGame(){
 			}, 600);
 		}
 	}
+	console.log(score);
 }
 
 function initGameMatrix(){

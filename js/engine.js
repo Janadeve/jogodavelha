@@ -145,7 +145,8 @@ function minimax(newBoard, player){
 
 function initGame(){
 	setIABlocked(false);
-	initMatrizes();
+	initGameMatrix();
+	initInterfaceMatrix();
 	if(lastWinner == 'X'){
 		setCurrentPlayer('X');	
 	}else if(lastWinner == 'O'){
@@ -160,6 +161,10 @@ function initGame(){
 			doMoveAI();
 		}
 	}
+}
+
+function initGameMatrix(){
+	setMtx([["", "", ""],["", "", ""],["", "", ""]]); 
 }
 
 function fillMatrix(col, row, player){

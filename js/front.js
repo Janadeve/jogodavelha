@@ -23,6 +23,12 @@ function getCanClick(){
 	return canClick;
 }
 
+function initInterfaceMatrix(){
+	$("#player .field").each(function(){
+		$(this).html("");
+	});
+}
+
 function showWinner(){
 	var resultModal = new bootstrap.Modal($('#resultModal'));
 	$("#resultModal p").html("<center>Jogador " + getCurrentPlayer() + " ganhou!</center>");
@@ -46,21 +52,6 @@ function fillInterfaceMatrix(col, row, player){
 function isFilledField(){
 	var result;
 	$(getCurrentField()).contents().length == 0 ? result = false : result = true;
-	return result;
-}
-
-function initMatrizes(){
-	setMtx([["", "", ""],["", "", ""],["", "", ""]]); 
-	$("#player .field").each(function(){
-		$(this).html("");
-	});
-}
-
-function isGameOver(){
-	result = false;
-	if(turns == 9){
-		result = true;
-	}
 	return result;
 }
 

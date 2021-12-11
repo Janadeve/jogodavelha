@@ -55,11 +55,11 @@ a:hover{
 #player{
 	display: block;
 	position: relative;
+	margin: 0.5rem auto;
 	width: 400px;
 	height: 400px;
-	left: calc(50% - 200px);
-	top: 16px;
 	background-color: #EEE;
+	padding: 
 }
 
 .field{
@@ -90,9 +90,15 @@ a:hover{
 
 
 footer{
-	position: relative;
+	position: fixed;
 	text-align: center;
-	margin-top: 50px;
+	margin: 0 auto;
+	bottom: 0px;
+	width: 100%;
+	border-top: 1px solid #CCC; 
+	padding-top: 15px;
+	background: rgb(212,212,212);
+	background: linear-gradient(180deg, #dfdfdf 0%, #ffffff 100%);
 }
 
 /* TELA DE CARREGANDO*/
@@ -141,4 +147,16 @@ footer{
 	z-index: 50;
 	float: all;
 	cursor: not-allowed;
+}
+
+#selectGameModeScreen{
+	display: block;
+	position: relative;
+	margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid #CCC; 
+    background: rgb(212,212,212);
+	background: linear-gradient(0deg, #dfdfdf 0%, #ffffff 100%);
 }

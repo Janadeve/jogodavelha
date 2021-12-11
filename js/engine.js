@@ -3,6 +3,19 @@ var mtx = [["", "", ""],["", "", ""],["", "", ""]]; // - Matrix of round game
 var currentPlayer = 'X';
 var IABlocked = false;
 var lastWinner = null;
+var gameMode = ""; //1 = Player vs Computer; 2 = Player vs Player
+
+function getGameMode(){
+	return gameMode;
+} 
+
+//Quando troca o modo de jogo voltamos para o X e o jogo reseta
+function setGameMode(newGameMode){
+	gameMode = newGameMode;
+	setCurrentPlayer('X');
+	setLastWinner(null);
+	initGame();
+}
 
 function getLastWinner(){
 	return lastWinner;
@@ -29,6 +42,14 @@ function setCurrentPlayer(player){
 }
 
 function toggleCurrentPlayer(){
+	if(getCurrentPlayer() == 'X'){
+		setCurrentPlayer('O');
+	}else{
+		setCurrentPlayer('X');
+	}
+}
+
+function toggleCurrentPlayer(){
 	currentPlayer == 'X' ? currentPlayer = 'O' : currentPlayer = 'X';
 }
 
@@ -45,9 +66,6 @@ function getAvailableFields(newBoard){
 	var col = 0;
 	var row = 0;
 	var cont = 0;
-	if(newBoard == undefined || newBoard.length == 0){
-		console.log("Aqui" + timesEnterFunctionMinimax);
-	}
 	newBoard.forEach(function(item){
 		item.forEach(function(subItem){
 			if(subItem == ""){
@@ -73,14 +91,11 @@ function setMoves(newMoves){
 }
 
 function minimax(newBoard, player){
-	//available spots
   	var availFields = getAvailableFields(newBoard);
 
-  	// checks for the terminal states such as win, lose, and tie and returning a value accordingly
   	if (hasSequence(newBoard, "X")){
      	return {score:-10};
-  	}
-  	else if (hasSequence(newBoard, "O")){
+  	}else if (hasSequence(newBoard, "O")){
     	return {score:10};
   	}else if (availFields.length === 0){
     	return {score:0};
@@ -143,23 +158,28 @@ function minimax(newBoard, player){
   	return bestMove;
 }
 
+function removeOverlay(){
+	$(".overlay-loading").fadeOut();
+	$(".modal-backdrop.show").hide()
+}
+
 function initGame(){
-	setIABlocked(false);
 	initGameMatrix();
 	initInterfaceMatrix();
+
 	if(lastWinner == 'X'){
 		setCurrentPlayer('X');	
+		removeOverlay();
 	}else if(lastWinner == 'O'){
 		setCurrentPlayer('O');
-		setTimeout(function(){
-			doMoveAI();
-		}, 600);
-	}else{
-		toggleCurrentPlayer();
-		if(getCurrentPlayer() == 'O'){
-			$(".overlay-loading").fadeIn();
-			doMoveAI();
+		removeOverlay();
+		if(getGameMode() == 1){
+			setTimeout(function(){
+				doMoveAI();
+			}, 600);
 		}
+	}else{
+		removeOverlay();
 	}
 }
 

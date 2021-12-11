@@ -57,20 +57,54 @@ function isFilledField(){
 
 function doMove(element){
 	if(getCanClick()){
+			//Travando o click durante o processamento
 			toggleCanClick();
-			col = $(element).data("col");
-			row = $(element).data("row");
-			setCurrentCoordinates(col, row);
+			//Setando o campo selecionado
 			setCurrentField(element);
+
+			//CAMPO NÃO PREENCHIDO
 			if(!isFilledField()){
-				fillInterfaceMatrix(col, row, "X");
-				fillMatrix(col, row, "X");
-				if(hasSequence(getMtx(), "X")){
-					setLastWinner("X")
-					showWinner();
+				//Capturando as coordenadas do campo clicado
+				col = $(element).data("col");
+				row = $(element).data("row");
+
+				//Set as coordenadas do campo selecionado
+				setCurrentCoordinates(col, row);
+
+				//Preenchedo a matrix da interface
+				fillInterfaceMatrix(col, row, getCurrentPlayer());
+				//Preenchendo a matrix da engine
+				fillMatrix(col, row, getCurrentPlayer());
+
+				//Jogador Venceu
+				if(hasWinner(getMtx(), getCurrentPlayer())){
+					setLastWinner(getCurrentPlayer())
+					showWinner(getMtx(), getCurrentPlayer());
+
+				//Se o jogador não ganhou
+				}else{
+					//Se não existir mais campos
+					if(getAvailableFields(getMtx()).length == 0){
+						showTieResult();
+					}else{
+						//Liberando a proxima jogada
+						toggleCanClick();
+						//Trocando o jogador
+						toggleCurrentPlayer();
+
+						//Caso esteja jogando com a máquina
+						if(getGameMode() == 1){
+							//Liberando a AI
+							setIABlocked(false);
+							//Mandando a AI jogar
+							doMoveAI();
+						}
+
+					}
+					
 				}	
-				toggleCanClick();
-				setIABlocked(false);
+
+			// CAMPO PREENCHIDO
 			}else{
 				console.log("Campo Preenchido");	
 				setIABlocked(true);
@@ -87,50 +121,52 @@ function doMove(element){
 
 function doMoveAI(){
 	$(".overlay-loading").fadeIn();
+	setCurrentPlayer('O');
+	//Verificando se a matrix está vazia
 	if(getAvailableFields(getMtx()).length == 9){
+		// Pegando numeros aleatorios para a máquina;
 		randNumberCol = Math.floor(Math.random() * 3);
 		randNumberRow = Math.floor(Math.random() * 3);
 
-		setCurrentPlayer('O');
+		//Preenchendo matrizes e coordenadas
 		fillMatrix(randNumberCol, randNumberRow, "O");
 		fillInterfaceMatrix(randNumberCol, randNumberRow, "O");
 		setCurrentCoordinates(randNumberCol, randNumberRow);
 
-		setTimeout(function(){
-			if(hasSequence(getMtx(), "O")){
-				setLastWinner("O")
-				showWinner();
-			}
-		}, 600);
+		//Mudando o jogador - Nesse caso impossivel ganhar pois a matrix está quase completa
+		toggleCurrentPlayer();
 	}else{
-		if(!getIABlocked()){
-			var auxMtx = getMtx().slice(0);
-			bestCoordinates = minimax(auxMtx, "O").coordinates;
-			if(getAvailableFields(getMtx()).length == 0){
-				showTieResult();
-			}else if(bestCoordinates == undefined){
-				var resultModal = new bootstrap.Modal($('#resultModal'));
-				$("#resultModal p").html("DESISTO!!! Você me pegou, mas estou treinando muito, logo vou te vencer.");
-				resultModal.show();
-			}else{
-				setCurrentPlayer('O');
-				fillMatrix(bestCoordinates.col, bestCoordinates.row, "O");
-				fillInterfaceMatrix(bestCoordinates.col, bestCoordinates.row, "O");
-				setCurrentCoordinates(bestCoordinates.col, bestCoordinates.row);
-				setTimeout(function(){
-					if(hasSequence(mtx, "O")){
-						setLastWinner("O")
-						showWinner();
-					}else if(getAvailableFields(getMtx()).length == 0){
-						setLastWinner(null);
-						showTieResult();
-					}
-				}, 600);
-				
-			}
+		var auxMtx = getMtx().slice(0);
 
-			$(".overlay-loading").fadeOut();
+		//Caso tenha campos disponiveis
+		if(getAvailableFields(getMtx())){
+			//Procura a melhor jogada
+			bestCoordinates = minimax(auxMtx, "O").coordinates;
+
+			// Preenche todas as matrizes e coordenadas
+			fillMatrix(bestCoordinates.col, bestCoordinates.row, "O");
+			fillInterfaceMatrix(bestCoordinates.col, bestCoordinates.row, "O");
+			setCurrentCoordinates(bestCoordinates.col, bestCoordinates.row);
+
+
+			setTimeout(function(){
+				//Caso a máquina ganhe
+				if(hasSequence(getMtx(), "O")){
+					setLastWinner("O")
+					showWinner();
+				//Caso ela não ganhe
+				}else{
+					//Troca o jogador
+					toggleCurrentPlayer();
+				}
+			}, 600);
+		}else{
+			setLastWinner(null);
+			showTieResult();
 		}
+		
+
+		$(".overlay-loading").fadeOut();
 		
 	}
 }

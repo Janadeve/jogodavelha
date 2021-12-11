@@ -100,9 +100,6 @@ function doMoveAI(){
 					if(winning(mtx, "O")){
 						setLastWinner("O")
 						showWinner();
-					}else if(winning(mtx, "X")){
-						setLastWinner("X")
-						showWinner();
 					}else if(getAvailableFields(getMtx()).length == 0){
 						setLastWinner(null);
 						showTieResult();
@@ -128,7 +125,6 @@ function showTieResult(){
 function doMove(element){
 	if(getCanClick()){
 			toggleCanClick();
-			incrementTurns();
 			col = $(element).data("col");
 			row = $(element).data("row");
 			setCurrentCoordinates(col, row);
@@ -137,26 +133,21 @@ function doMove(element){
 				fillInterfaceMatrix(col, row, "X");
 				fillMatrix(col, row, "X");
 				if(winning(getMtx(), "X")){
-					if(isGameOver()){
-						var resultModal = new bootstrap.Modal($('#resultModal'));
-						$("#resultModal p").html("Game Over!");
-						resultModal.show();
-						initGame();
-						return false;
-					}
-					return true;
-					toggleCurrentPlayer();
-				}else{
-					hasWinner();
-				}
+					setLastWinner("X")
+					showWinner();
+				}	
 				toggleCanClick();
+				setIABlocked(false);
 			}else{
 				console.log("Campo Preenchido");	
+				setIABlocked(true);
 				toggleCanClick();
 				return false;
 			}	
 		}else{
 			console.log("Aguarde o processamento");
+			toggleCanClick();
+			setIABlocked(true);
 			return false;
 		}
 }

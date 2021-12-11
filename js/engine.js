@@ -1,6 +1,6 @@
 // var mtx = [["O", "", "O"],["O", "X", "O"],["X", "", "X"]]; // - Matrix of round game
 var mtx = [["", "", ""],["", "", ""],["", "", ""]]; // - Matrix of round game
-var currentPlayer = 'O';
+var currentPlayer = 'X';
 var turns = 0;
 var IABlocked = false;
 var lastWinner = null;

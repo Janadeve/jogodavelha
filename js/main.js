@@ -13,7 +13,7 @@ $(document).ready(function($) {
 	$(".field").click(function(){
 		doMove(this);
 		timesEnterFunctionMinimax = 0;
-		if(!hasWinner()){
+		if(!hasWinner() && !getIABlocked()){
 			$(".overlay-loading").fadeIn();
 			setTimeout(function(){
 				toggleCurrentPlayer();

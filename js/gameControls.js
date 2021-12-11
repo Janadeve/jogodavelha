@@ -12,6 +12,9 @@ function startGame(event){
 
 		$("#goBackBtn").removeClass('is-disabled');
 		$("#goBackBtn").addClass('is-warning');
+
+		$("#goBackBtn").show()
+		$("#startBtn").hide()
 	}
 
 }
@@ -26,6 +29,9 @@ function goBack(){
 
 		$("#goBackBtn").removeClass('is-warning');
 		$("#goBackBtn").addClass('is-disabled');
+
+		$("#goBackBtn").hide()
+		$("#startBtn").show()
 
 		initInterfaceMatrix();
 		initGameMatrix();

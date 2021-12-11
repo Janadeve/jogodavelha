@@ -40,7 +40,7 @@ function initInterfaceMatrix(){
 
 function showWinner(){
 	var resultModal = new bootstrap.Modal($('#resultModal'));
-	$("#resultModal p").html("<center>Jogador " + getCurrentPlayer() + " ganhou!</center>");
+	$("#resultModal p").html("<center><i class='nes-icon trophy is-large'></i> Jogador " + getCurrentPlayer() + " ganhou!</center>");
 	resultModal.show();
 	return false;
 }

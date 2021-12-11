@@ -35,6 +35,8 @@ function getGameMode(){
 function setGameMode(newGameMode){
 	gameMode = newGameMode;
 
+	$("#gameModeBtn"+newGameMode+ " input").attr("checked", "checked");
+
 	$("#startBtn").removeClass("is-disabled");
 	$("#startBtn").addClass("is-success");
 

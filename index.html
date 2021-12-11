@@ -12,8 +12,7 @@
 		<script type="text/javascript" src="js/front.js"></script>
 		<script type="text/javascript" src="js/gameControls.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
-		<!-- Styles -->
-		<link rel="stylesheet" type="text/css" href="css/player.css">
+	
 		<!-- favicon -->
 		<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 		
@@ -27,6 +26,9 @@
 		<!-- core style only -->
 		<link href="https://unpkg.com/nes.css/css/nes-core.min.css" rel="stylesheet" />
 
+		<!-- Styles -->
+		<link rel="stylesheet" type="text/css" href="css/player.css">
+		<link rel="stylesheet" type="text/css" href="css/interface.css">
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
 	<body>
@@ -41,6 +43,7 @@
 			<div id="selectGameModeScreen" class="clearfix">
 				<div id="controlBar" class="btn-group-toggle" class="d-flex justify-content-center" role="group">
 					<button id="startBtn" onclick="startGame(event)" type="button" class="nes-btn is-disabled">Start</button>
+					<button id="goBackBtn" onclick="goBack()" type="button" class="nes-btn is-disabled">Cancelar</button>
 				  	<label id="gameModeBtn2">
 					  <input type="radio" class="nes-radio" name="answer" onclick="setGameMode(2)"/>
 					  <span>Jogar com um amigo</span>
@@ -49,7 +52,6 @@
 					  <input type="radio" class="nes-radio" name="answer" onclick="setGameMode(1)"/>
 					  <span>Enfrentar AI</span>
 					</label>
-				  	<button id="goBackBtn" onclick="goBack()" type="button" class="nes-btn is-disabled">Cancelar</button>
 				</div>
 			</div>
 			<div id="player">

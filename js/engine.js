@@ -1,7 +1,6 @@
 // var mtx = [["O", "", "O"],["O", "X", "O"],["X", "", "X"]]; // - Matrix of round game
 var mtx = [["", "", ""],["", "", ""],["", "", ""]]; // - Matrix of round game
 var currentPlayer = 'X';
-var turns = 0;
 var IABlocked = false;
 var lastWinner = null;
 
@@ -19,19 +18,6 @@ function getIABlocked(){
 
 function setIABlocked(novoValor){
 	IABlocked = novoValor;
-}
-
-
-function getTurns(){
-	return turns;
-}
-
-function incrementTurns(){
-	turns++ 
-}
-
-function resetTurns(){
-	turns = 0; 
 }
 
 function getCurrentPlayer(){
@@ -52,17 +38,6 @@ function getMtx(){
 
 function setMtx(value){
 	mtx = value;
-}
-
-function hasWinner(){
-	if(hasSequence()){
-		setLastWinner(getCurrentPlayer());
-		showWinner();
-		setIABlocked(true);
-		return true;
-	}else{
-		return false;
-	}	
 }
 
 function getAvailableFields(newBoard){
@@ -87,27 +62,6 @@ function getAvailableFields(newBoard){
 	return myAvailFields;
 }
 
-// 00	01	02
-// 10	11	12	
-// 20	21	22
-
-
-function winning(board, player){
-	if (
-	(board[0][0] == player && board[0][1] == player && board[0][2] == player) ||
-	(board[1][0] == player && board[1][1] == player && board[1][2] == player) ||
-	(board[2][0] == player && board[2][1] == player && board[2][2] == player) ||
-	(board[0][0] == player && board[1][0] == player && board[2][0] == player) ||
-	(board[0][1] == player && board[1][1] == player && board[2][1] == player) ||
-	(board[0][2] == player && board[1][2] == player && board[2][2] == player) ||
-	(board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
-	(board[2][0] == player && board[1][1] == player && board[0][2] == player)){
-		return true;
-	}else{
-		return false;
-	}
-}
-
 var moves = [];
 
 function getMoves(){
@@ -118,17 +72,15 @@ function setMoves(newMoves){
 	moves = newMoves;
 }
 
-var timesEnterFunctionMinimax = 0;
 function minimax(newBoard, player){
-	console.log(timesEnterFunctionMinimax++);
 	//available spots
   	var availFields = getAvailableFields(newBoard);
 
   	// checks for the terminal states such as win, lose, and tie and returning a value accordingly
-  	if (winning(newBoard, "X")){
+  	if (hasSequence(newBoard, "X")){
      	return {score:-10};
   	}
-  	else if (winning(newBoard, "O")){
+  	else if (hasSequence(newBoard, "O")){
     	return {score:10};
   	}else if (availFields.length === 0){
     	return {score:0};
@@ -144,6 +96,7 @@ function minimax(newBoard, player){
 	  	move.coordinates = {row: "", col: ""};
 	  	move.coordinates.row = availFields[i].row;
 	  	move.coordinates.col = availFields[i].col;
+	  	setCurrentCoordinates(move.coordinates.col, move.coordinates.row);
 	  	move.idx = availFields[i].idx;
 
 	 	// set the empty spot to the current player
@@ -193,7 +146,6 @@ function minimax(newBoard, player){
 function initGame(){
 	setIABlocked(false);
 	initMatrizes();
-	resetTurns();
 	if(lastWinner == 'X'){
 		setCurrentPlayer('X');	
 	}else if(lastWinner == 'O'){
@@ -208,9 +160,7 @@ function initGame(){
 			doMoveAI();
 		}
 	}
-	
 }
-
 
 function fillMatrix(col, row, player){
 	var mtx = getMtx();
@@ -219,44 +169,51 @@ function fillMatrix(col, row, player){
 	mtx[row][col] = player;
 }
 
-function hasHorizontalSequence(){
+function hasHorizontalSequence(newBoard, player){
 	var coordinates = getCurrentCoordinates();
-	mtx[coordinates.row][0] == mtx[coordinates.row][1] && mtx[coordinates.row][0] == mtx[coordinates.row][2] ?  success = true : success = false;
+	newBoard[coordinates.row][0] == newBoard[coordinates.row][1] && newBoard[coordinates.row][0] == newBoard[coordinates.row][2] && newBoard[coordinates.row][0] == player ?  success = true : success = false;
 	return success;	
 }
 
-function hasVerticalSequence(){
+function hasVerticalSequence(newBoard, player){
 	var coordinates = getCurrentCoordinates();
-	mtx[0][coordinates.col] == mtx[1][coordinates.col] && mtx[0][coordinates.col] == mtx[2][coordinates.col] ?  success = true : success = false;
+	newBoard[0][coordinates.col] == newBoard[1][coordinates.col] && newBoard[0][coordinates.col] == newBoard[2][coordinates.col] && newBoard[0][coordinates.col] == player ?  success = true : success = false;
 	return success;
 }
 
-function hasDiagonalSequence(){
+function hasDiagonalSequence(newBoard, player){
 	var coordinates = getCurrentCoordinates();
-	if(!((coordinates.row == 0 && coordinates.col == 1) || (coordinates.row == 1 && coordinates.col == 0) || (coordinates.row == 1 && coordinates.col == 2) || (coordinates.row == 2 && coordinates.col == 1))){
 		if(coordinates.row == coordinates.col){
-			mtx[0][0] == mtx[1][1] && mtx[0][0] == mtx[2][2] ? success = true : success = false;	
+			newBoard[0][0] == newBoard[1][1] && newBoard[0][0] == newBoard[2][2] &&  newBoard[0][0] == player ? success = true : success = false;	
+		}else if(coordinates.row+coordinates.col == 2){
+			newBoard[0][2] == newBoard[1][1] && newBoard[0][2] == newBoard[2][0] && newBoard[0][2] == player ? success = true : success = false;	
 		}
-		if(coordinates.row+coordinates.col == 2){
-			mtx[0][2] == mtx[1][1] && mtx[0][2] == mtx[2][0] ? success = true : success = false;	
-		}
-	}
 	return success;
 }
 
-
-function hasSequence(){
+function hasSequence(newBoard, player){
 	var success = false;
 
-	success = hasHorizontalSequence();
+	success = hasHorizontalSequence(newBoard, player);
 
 	if(success == false){
-		success = hasVerticalSequence();
+		success = hasVerticalSequence(newBoard, player);
 	}
 
 	if(success == false){
-		success = hasDiagonalSequence();
+		success = hasDiagonalSequence(newBoard, player);
 	}
 
 	return success;
+}
+
+function hasWinner(newBoard, player){
+	if(hasSequence(newBoard, player)){
+		setLastWinner(getCurrentPlayer());
+		showWinner();
+		setIABlocked(true);
+		return true;
+	}else{
+		return false;
+	}	
 }

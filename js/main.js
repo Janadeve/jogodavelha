@@ -12,8 +12,7 @@ $(document).ready(function($) {
 	//Bind (listener) click of fields
 	$(".field").click(function(){
 		doMove(this);
-		timesEnterFunctionMinimax = 0;
-		if(!hasWinner() && !getIABlocked()){
+		if(!hasWinner(getMtx(), 'X') && !getIABlocked()){
 			$(".overlay-loading").fadeIn();
 			setTimeout(function(){
 				toggleCurrentPlayer();

@@ -64,6 +64,36 @@ function isGameOver(){
 	return result;
 }
 
+function doMove(element){
+	if(getCanClick()){
+			toggleCanClick();
+			col = $(element).data("col");
+			row = $(element).data("row");
+			setCurrentCoordinates(col, row);
+			setCurrentField(element);
+			if(!isFilledField()){
+				fillInterfaceMatrix(col, row, "X");
+				fillMatrix(col, row, "X");
+				if(hasSequence(getMtx(), "X")){
+					setLastWinner("X")
+					showWinner();
+				}	
+				toggleCanClick();
+				setIABlocked(false);
+			}else{
+				console.log("Campo Preenchido");	
+				setIABlocked(true);
+				toggleCanClick();
+				return false;
+			}	
+		}else{
+			console.log("Aguarde o processamento");
+			toggleCanClick();
+			setIABlocked(true);
+			return false;
+		}
+}
+
 function doMoveAI(){
 	$(".overlay-loading").fadeIn();
 	if(getAvailableFields(getMtx()).length == 9){
@@ -76,7 +106,7 @@ function doMoveAI(){
 		setCurrentCoordinates(randNumberCol, randNumberRow);
 
 		setTimeout(function(){
-			if(winning(getMtx(), "O")){
+			if(hasSequence(getMtx(), "O")){
 				setLastWinner("O")
 				showWinner();
 			}
@@ -97,7 +127,7 @@ function doMoveAI(){
 				fillInterfaceMatrix(bestCoordinates.col, bestCoordinates.row, "O");
 				setCurrentCoordinates(bestCoordinates.col, bestCoordinates.row);
 				setTimeout(function(){
-					if(winning(mtx, "O")){
+					if(hasSequence(mtx, "O")){
 						setLastWinner("O")
 						showWinner();
 					}else if(getAvailableFields(getMtx()).length == 0){
@@ -114,7 +144,6 @@ function doMoveAI(){
 	}
 }
 
-
 function showTieResult(){
 	var resultModal = new bootstrap.Modal($('#resultModal'));
 	$("#resultModal p").html("Tie - Deu velha!");
@@ -122,32 +151,3 @@ function showTieResult(){
 }
 
 
-function doMove(element){
-	if(getCanClick()){
-			toggleCanClick();
-			col = $(element).data("col");
-			row = $(element).data("row");
-			setCurrentCoordinates(col, row);
-			setCurrentField(element);
-			if(!isFilledField()){
-				fillInterfaceMatrix(col, row, "X");
-				fillMatrix(col, row, "X");
-				if(winning(getMtx(), "X")){
-					setLastWinner("X")
-					showWinner();
-				}	
-				toggleCanClick();
-				setIABlocked(false);
-			}else{
-				console.log("Campo Preenchido");	
-				setIABlocked(true);
-				toggleCanClick();
-				return false;
-			}	
-		}else{
-			console.log("Aguarde o processamento");
-			toggleCanClick();
-			setIABlocked(true);
-			return false;
-		}
-}

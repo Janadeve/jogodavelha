@@ -3,6 +3,9 @@ function startGame(event){
 		document.getElementById('select-game-mode-modal').showModal();
 		event.preventDefault();
 	}else{
+		//Colocando X para começar primeiro
+		setCurrentPlayer("X");
+
 		// Retirando o overlay do player
 		$("#playerOverlay").hide();
 
@@ -24,9 +27,9 @@ function startGame(event){
 
 		//Definindo o nome dos jogadores no placas
 		if(getGameMode() == 1){
-			$("#player2Name").html("IA (Máquina)");
+			$("#player2Name").html("IA (Máquina): ");
 		}else{
-			$("#player2Name").html("Jogador O");
+			$("#player2Name").html("Jogador O: ");
 		}
 
 		//Mostrando o Placar

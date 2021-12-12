@@ -2,6 +2,7 @@ var canClick = true; // - Flag of allow click in player of game
 var currentField; // - Current clicked field
 var currentCoordinates = {col: "", row: ""};
 var bestCoordinates = "";
+var timeToThink = 600; // Para simular o processamento da máquina (muito rápida incomoda)
 
 function getCurrentCoordinates(){
 	return currentCoordinates;
@@ -59,7 +60,11 @@ function isFilledField(){
 }
 
 function doMove(element){
-	$(".overlay-loading").fadeIn();
+	//Se o modo de jogo é com a IA colocamos o overlay para esperar ela jogar
+	if(getGameMode() == 1){
+		$(".overlay-loading").fadeIn();
+	}
+
 	if(getCanClick()){
 			//Travando o click durante o processamento
 			toggleCanClick();
@@ -154,50 +159,66 @@ function doMoveAI(){
 
 		$(".overlay-loading").fadeOut();
 	}else{
-		var auxMtx = getMtx().slice(0);
-		//Caso tenha campos disponiveis
-		if(getAvailableFields(getMtx())){
-			//Procura a melhor jogada
-			bestCoordinates = minimax(auxMtx, "O").coordinates;
+		setTimeout(function(){
+			var auxMtx = getMtx().slice(0);
+			//Caso tenha campos disponiveis
+			if(getAvailableFields(getMtx())){
+				//Procura a melhor jogada
+				bestCoordinates = minimax(auxMtx, "O").coordinates;
 
-			//Retirando o Loading
-			$(".overlay-loading").fadeOut();
+				//Retirando o Loading
+				$(".overlay-loading").fadeOut();
 
-			// Preenche todas as matrizes e coordenadas
-			fillMatrix(bestCoordinates.col, bestCoordinates.row, "O");
-			fillInterfaceMatrix(bestCoordinates.col, bestCoordinates.row, "O");
-			setCurrentCoordinates(bestCoordinates.col, bestCoordinates.row);
+				// Preenche todas as matrizes e coordenadas
+				fillMatrix(bestCoordinates.col, bestCoordinates.row, "O");
+				fillInterfaceMatrix(bestCoordinates.col, bestCoordinates.row, "O");
+				setCurrentCoordinates(bestCoordinates.col, bestCoordinates.row);
 
 
-			setTimeout(function(){
-				//Caso a máquina ganhe
-				if(hasSequence(getMtx(), "O")){
-					setLastWinner("O")
-					addScoreToPlayer("O");
-					$("#numScoreO").html(getScore().player2);
-					showWinner();
-				//Caso ela não ganhe
-				}else{
-					//Troca o jogador
-					toggleCurrentPlayer();
-					//Setando ultimo jogador como null
-					setLastWinner(null);
-					if(getAvailableFields(getMtx()).length == 0){
-						showTieResult();	
+				setTimeout(function(){
+					//Caso a máquina ganhe
+					if(hasSequence(getMtx(), "O")){
+						setLastWinner("O")
+						addScoreToPlayer("O");
+						$("#numScoreO").html(getScore().player2);
+						$(".overlay-loading").fadeOut();
+						showWinner();
+					//Caso ela não ganhe
+					}else{
+						//Troca o jogador
+						toggleCurrentPlayer();
+						//Setando ultimo jogador como null
+						setLastWinner(null);
+						if(getAvailableFields(getMtx()).length == 0){
+							showTieResult();	
+						}
+						$(".overlay-loading").fadeOut();
 					}
-				}
-			}, 600);
-		}else{
-			//Setando ultimo jogador como null
-			setLastWinner(null);
-			//Trocando o jogador
-			toggleCurrentPlayer();
-			showTieResult();
-			$(".overlay-loading").fadeOut();
-		}
+				}, 600);
+			}else{
+				//Setando ultimo jogador como null
+				setLastWinner(null);
+				//Trocando o jogador
+				toggleCurrentPlayer();
+				showTieResult();
+				$(".overlay-loading").fadeOut();
+			}
+		}, timeToThink); // Tempo para fazer a máquina esperar, quando é muito rápida o jogador se incomoda
+		
 		
 	}
 }
+
+function setHighLightInScore(player){
+	if(player == 'X'){
+		$("#player1Name").addClass("currentPlayerNameScore blink");
+		$("#player2Name").removeClass("currentPlayerNameScore blink");
+	}else if(player == 'O'){
+		$("#player1Name").removeClass("currentPlayerNameScore blink");
+		$("#player2Name").addClass("currentPlayerNameScore blink");
+	}
+}
+
 
 function showTieResult(){
 	$("#resultModal .message").html("<i class='nes-icon close'></i> Deu velha!");

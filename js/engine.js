@@ -35,17 +35,15 @@ function getGameMode(){
 function setGameMode(newGameMode){
 	gameMode = newGameMode;
 
-	$("#gameModeBtn"+newGameMode+ " input").attr("checked", "checked");
-
 	$("#startBtn").removeClass("is-disabled");
 	$("#startBtn").addClass("is-success");
 
 	if(newGameMode == 1){
-		
-	}
-
-	if(newGameMode == 2){
-		
+		$("#gameModeBtn1 span").css("color", "#4AA52E");
+		$("#gameModeBtn2 span").css("color", "#22223D");
+	}else if(newGameMode == 2){
+		$("#gameModeBtn1 span").css("color", "#22223D");
+		$("#gameModeBtn2 span").css("color", "#4AA52E");
 	}
 
 	$("#player").css("pointer-events", "auto");
@@ -79,15 +77,8 @@ function setCurrentPlayer(player){
 }
 
 function toggleCurrentPlayer(){
-	if(getCurrentPlayer() == 'X'){
-		setCurrentPlayer('O');
-	}else{
-		setCurrentPlayer('X');
-	}
-}
-
-function toggleCurrentPlayer(){
 	currentPlayer == 'X' ? currentPlayer = 'O' : currentPlayer = 'X';
+	setHighLightInScore(currentPlayer);
 }
 
 function getMtx(){
@@ -129,10 +120,8 @@ function setMoves(newMoves){
 
 var numTimesEnterFunction = 0;
 function minimax(newBoard, player){
-	console.log(numTimesEnterFunction++);
+	// console.log(numTimesEnterFunction++); //CONSOLE LOG DEIXA AS COISAS LENTAS
   	var availFields = getAvailableFields(newBoard);
-
-
   	//Essa verificação faz economizar processamento
   	//Antes percorria toda a matriz mesmo quando achava a sequencia
   	if (hasSequence(newBoard, "X")){

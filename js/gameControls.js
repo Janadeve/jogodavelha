@@ -9,6 +9,9 @@ function startGame(event){
 		// Retirando o overlay do player
 		$("#playerOverlay").hide();
 
+		//Esconde o painel de escolha dos modos do jogo
+		$("#gameModeBtn1, #gameModeBtn2").css("visibility", "hidden");
+
 		//Não deixa trocar o modo de jogo no meio da partida
 		$("#gameModeBtn1, #gameModeBtn2").attr('disabled','disabled');
 		$("#gameModeBtn1 input, #gameModeBtn2 input").attr('disabled','disabled');
@@ -46,6 +49,11 @@ function goBack(){
 		$("#resultModal").hide();
 
 		$("#playerOverlay").show();
+
+		//Esconde o painel de escolha dos modos do jogo
+		$("#gameModeBtn1, #gameModeBtn2").css("visibility", "visible");
+
+
 		$("#gameModeBtn1, #gameModeBtn2").removeAttr('disabled');
 		$("#gameModeBtn1 input, #gameModeBtn2 input").removeAttr('checked');
 		$("#gameModeBtn1 input, #gameModeBtn2 input").removeAttr('disabled');

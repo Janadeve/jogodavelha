@@ -39,18 +39,17 @@ function initInterfaceMatrix(){
 }
 
 function showWinner(){
-	var resultModal = new bootstrap.Modal($('#resultModal'));
-	$("#resultModal p").html("<center><i class='nes-icon trophy is-large'></i> Jogador " + getCurrentPlayer() + " ganhou!</center>");
-	resultModal.show();
-	return false;
+	if(getCurrentPlayer() == "O" && getGameMode() == 1){
+		$("#resultModal .message").html("<center><i class='nes-icon trophy'></i> A Inteligência artificial ganhou!</center>");
+	}else{
+		$("#resultModal .message").html("<center><i class='nes-icon trophy'></i> Jogador " + getCurrentPlayer() + " ganhou!</center>");
+	}
+	$("#resultModal").show();
 }
 
 function fillInterfaceMatrix(col, row, player){
 	//Add the X or O into the field
 	$("#player .field[data-col = '" + col + "'][data-row='" + row + "']").html("<span class='marker'>" + player + "</span>");
-	setTimeout(function(){
-		$(".overlay-loading").fadeOut();
-	}, 1500);
 }
 
 function isFilledField(){
@@ -60,9 +59,7 @@ function isFilledField(){
 }
 
 function doMove(element){
-	if(getGameMode() == 1){
-		$(".overlay-loading").fadeIn();
-	}
+	$(".overlay-loading").fadeIn();
 	if(getCanClick()){
 			//Travando o click durante o processamento
 			toggleCanClick();
@@ -87,7 +84,12 @@ function doMove(element){
 				if(hasWinner(getMtx(), getCurrentPlayer())){
 					setLastWinner(getCurrentPlayer())
 					showWinner(getMtx(), getCurrentPlayer());
-					addScoreToPlayer("X");
+					addScoreToPlayer(getCurrentPlayer());
+					if(getCurrentPlayer() == "X"){
+						$("#numScoreX").html(getScore().player1);
+					}else if(getCurrentPlayer() == "O"){
+						$("#numScoreO").html(getScore().player2);
+					}
 				//Se o jogador não ganhou
 				}else{
 					//Se não existir mais campos
@@ -149,13 +151,17 @@ function doMoveAI(){
 		//Mudando o jogador - Nesse caso impossivel ganhar 
 		//pois a matrix está quase completa (agora tem 8 espaços somente)
 		toggleCurrentPlayer();
+
+		$(".overlay-loading").fadeOut();
 	}else{
 		var auxMtx = getMtx().slice(0);
-
 		//Caso tenha campos disponiveis
 		if(getAvailableFields(getMtx())){
 			//Procura a melhor jogada
 			bestCoordinates = minimax(auxMtx, "O").coordinates;
+
+			//Retirando o Loading
+			$(".overlay-loading").fadeOut();
 
 			// Preenche todas as matrizes e coordenadas
 			fillMatrix(bestCoordinates.col, bestCoordinates.row, "O");
@@ -166,8 +172,9 @@ function doMoveAI(){
 			setTimeout(function(){
 				//Caso a máquina ganhe
 				if(hasSequence(getMtx(), "O")){
-					addScoreToPlayer("O");
 					setLastWinner("O")
+					addScoreToPlayer("O");
+					$("#numScoreO").html(getScore().player2);
 					showWinner();
 				//Caso ela não ganhe
 				}else{
@@ -186,18 +193,15 @@ function doMoveAI(){
 			//Trocando o jogador
 			toggleCurrentPlayer();
 			showTieResult();
+			$(".overlay-loading").fadeOut();
 		}
-		
-
-		$(".overlay-loading").fadeOut();
 		
 	}
 }
 
 function showTieResult(){
-	var resultModal = new bootstrap.Modal($('#resultModal'));
-	$("#resultModal p").html("Tie - Deu velha!");
-	resultModal.show();
+	$("#resultModal .message").html("<i class='nes-icon close'></i> Deu velha!");
+	document.getElementById('resultModal').showModal();
 }
 
 function blinkElement(element) {

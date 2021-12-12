@@ -1,0 +1,1 @@
+- Criar uma lógica pra checar somente os campos filhos do nó, não precisamos 

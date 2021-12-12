@@ -50,10 +50,21 @@
 					</label>
 					<label id="gameModeBtn1" >
 					  <input type="radio" class="nes-radio" name="answer" onclick="setGameMode(1)"/>
-					  <span>Enfrentar AI</span>
+					  <span>Enfrentar IA</span>
 					</label>
 				</div>
 			</div>
+			<!-- PLACAR -->
+			<div id="placar" class="nes-container with-title is-centered">
+			  <p class="title">Placar</p>
+			  <p>
+			  	<i class="snes-logo"></i>
+			  	<span id="player1Name">Jogador X</span>: <b id="numScoreX">0</b></span>
+			  	<i class="snes-jp-logo"></i>
+			  	<span id="player2Name">Jogador O</span>: <b id="numScoreO">0</b>
+			  </p>
+			</div>
+			<!-- PLAYER -->
 			<div id="player">
 				<div class="field" data-row="0" data-col="0"></div>
 				<div class="field" data-row="0" data-col="1"></div>
@@ -66,11 +77,10 @@
 				<div class="field" data-row="2" data-col="2"></div>
 				<div id="playerOverlay"></div>
 			</div>
-			
+			<!-- FOOTER -->
 			<footer>
 				<p>Developed by <a href="https://github.com/Janadeve" target="_blank"><b>@Janadeve<b></a> & <a href="https://github.com/romagnolocesar" target="_blank"><b>@CesarRomagnolo<b></a></p>
 			</footer>
-
 			<!-- MODAL SELECIONE UM MODO DE JOGO -->
 			<section>
 			  <dialog class="nes-dialog" id="select-game-mode-modal">
@@ -83,21 +93,19 @@
 			    </form>
 			  </dialog>
 			</section>
-
-			<!-- MODAL Result message -->
-			<div id="resultModal" class="modal" tabindex="-1">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title">Aviso!</h5>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="initGame()"></button>
-			      </div>
-			      <div class="modal-body">
-			        <p></p>
-			      </div>
-			    </div>
-			  </div>
-			</div>
+			<!-- MODAL RESULTADO DO JOGO -->
+			<section>
+			  <dialog class="nes-dialog" id="resultModal">
+			    <form method="dialog">
+			      <p class="title">Resultado</p>
+			      <p class="message"></p>
+			      <menu class="dialog-menu">
+			        <button class="nes-btn" onclick="goBack()">Cancelar Jogo</button>
+			        <button class="nes-btn is-primary" onclick="initGame()">Próximo Turno</button>
+			      </menu>
+			    </form>
+			  </dialog>
+			</section>
 		</div>
 	</body>
 </html>

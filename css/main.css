@@ -14,7 +14,7 @@
 
 html{
 	font-family: 'Roboto', sans-serif !important;
-	overflow: hidden;
+	overflow-x: hidden;
 	-webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -22,6 +22,12 @@ html{
     -ms-user-select: none;
     user-select: none;
     background-color: var(--fourth-color);
+}
+
+body{
+	font-smooth: always;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 a{
@@ -56,10 +62,10 @@ a:hover{
 }
 
 footer{
-	position: fixed;
+	display: block;
+	position: absolute;
 	text-align: center;
 	margin: 0 auto;
-	bottom: 0px;
 	width: 100%;
 	border-top: 1px solid #CCC; 
 	padding-top: 15px;

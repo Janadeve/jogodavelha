@@ -127,9 +127,14 @@ function setMoves(newMoves){
 	moves = newMoves;
 }
 
+var numTimesEnterFunction = 0;
 function minimax(newBoard, player){
+	console.log(numTimesEnterFunction++);
   	var availFields = getAvailableFields(newBoard);
 
+
+  	//Essa verificação faz economizar processamento
+  	//Antes percorria toda a matriz mesmo quando achava a sequencia
   	if (hasSequence(newBoard, "X")){
      	return {score:-10};
   	}else if (hasSequence(newBoard, "O")){
@@ -140,10 +145,10 @@ function minimax(newBoard, player){
 
   	setMoves([]);
 
-	// loop through available spots
+	// Percorrer os locais disponíveis
 	for (var i = 0; i < availFields.length; i++){
 		let auxMoves = getMoves();
-		//create an object for each and store the index of that spot that was stored as a number in the object's index key
+		//Crie um objeto para cada um e armazene o índice desse ponto que foi armazenado como um número na chave de índice do objeto
 	  	var move = {};
 	  	move.coordinates = {row: "", col: ""};
 	  	move.coordinates.row = availFields[i].row;
@@ -151,10 +156,10 @@ function minimax(newBoard, player){
 	  	setCurrentCoordinates(move.coordinates.col, move.coordinates.row);
 	  	move.idx = availFields[i].idx;
 
-	 	// set the empty spot to the current player
+	 	// Definir o local vazio para o jogador atual
 	  	newBoard[availFields[i].row][availFields[i].col] = player;
 
-	  	//if collect the score resulted from calling minimax on the opponent of the current player
+	  	// Se coletar a pontuação resultante da chamada do minimax no oponente do jogador atual
 	  	if (player == "O"){
 	    	var result = minimax(newBoard, "X");
 	    	move.score = result.score;
@@ -163,15 +168,16 @@ function minimax(newBoard, player){
 	    	move.score = result.score;
 	  	}
 
-	  	//reset the spot to empty
+	  	//Redefina o local para vazio
 	    newBoard[availFields[i].row][availFields[i].col] = "";
 
+	    //Coloca no array de movimentos auxiliar
 	    auxMoves.push(move);
 		setMoves(auxMoves);
     
   	}
 
-	// if it is the computer's turn loop over the moves and choose the move with the highest score
+	// se for a vez do computador, faça um loop sobre os movimentos e escolha o lance com a maior pontuação
   	var bestMove;
   	if(player === "O"){
 	    var bestScore = -10000;
@@ -182,7 +188,7 @@ function minimax(newBoard, player){
 	      	}
 	    }
   	}else{
-		// else loop over the moves and choose the move with the lowest score
+		// Senão faz um loop sobre os movimentos e escolhe o movimento com a pontuação mais baixa
     	var bestScore = 10000;
     	for(var i = 0; i < moves.length; i++){
       		if(moves[i].score < bestScore){
@@ -201,6 +207,9 @@ function removeOverlay(){
 }
 
 function initGame(){
+	//Retirando a modal de aviso de ganhador
+	$("#resultModal").hide();
+	
 	//Reiniciando as Matrizes
 	initGameMatrix();
 	initInterfaceMatrix();
@@ -221,7 +230,6 @@ function initGame(){
 		}
 	}else{
 		removeOverlay();
-
 		if(getGameMode() == 1 && getCurrentPlayer() == 'O'){
 			setTimeout(function(){
 				doMoveAI();

@@ -10,7 +10,9 @@ function startGame(event){
 		$("#playerOverlay").hide();
 
 		//Esconde o painel de escolha dos modos do jogo
-		$("#gameModeBtn1, #gameModeBtn2").css("visibility", "hidden");
+		// $("#gameModeBtn1, #gameModeBtn2").css("visibility", "hidden");
+		$("#gameModeBtn1, #gameModeBtn2").hide();
+		$("#controlBar").css("padding-bottom", "3rem");
 
 		//Não deixa trocar o modo de jogo no meio da partida
 		$("#gameModeBtn1, #gameModeBtn2").attr('disabled','disabled');
@@ -27,6 +29,9 @@ function startGame(event){
 		//Trocando a visualização dos botões (cancelar / start)
 		$("#goBackBtn").show()
 		$("#startBtn").hide()
+
+		//Escondendo a seleção do tipo de jogo (sozinho ou vs IA)
+		$("#selectGameModeScreen").hide();
 
 		//Definindo o nome dos jogadores no placas
 		if(getGameMode() == 1){
@@ -50,8 +55,10 @@ function goBack(){
 
 		$("#playerOverlay").show();
 
-		//Esconde o painel de escolha dos modos do jogo
-		$("#gameModeBtn1, #gameModeBtn2").css("visibility", "visible");
+		//Mostra o painel de escolha dos modos do jogo
+		$("#selectGameModeScreen").show();
+		$("#gameModeBtn1, #gameModeBtn2").show();
+		$("#controlBar").css("padding-bottom", "0");
 
 
 		$("#gameModeBtn1, #gameModeBtn2").removeAttr('disabled');
@@ -79,4 +86,4 @@ function goBack(){
 		initInterfaceMatrix();
 		initGameMatrix();
 	}
-};
+}

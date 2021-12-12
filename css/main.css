@@ -1,16 +1,38 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Genos&display=swap');
 
 /*Colors Palette*/
 :root {
-  --main-color: #22223d;
-  --second-color: #565A75;
-  --second-color-hover: #0897db;
-  --third-color: #C6B7BE;
-  --third-color2: #e3dbdf;
-  --fourth-color: #FAFBF6;
-  --highlight-color: #E59400;
+	--main-color: #22223d;
+	--second-color: #565A75;
+	--second-color-hover: #0897db;
+	--third-color: #C6B7BE;
+	--third-color2: #e3dbdf;
+	--fourth-color: #FAFBF6;
+	--highlight-color: #E59400;
+
+	--white: #fff;
+	--text: #403c4a;
+	--text-emphasized: #201d29;
+	--text-muted: #78757f;
+	--text-pink: #c10b7e;
+	--yellow: #ffe742;
+	--yellow-dark: #ddc62c;
+	--pink: #ff87d4;
+	--pink-faded: #f5f2fc;
+	--pink-dark: #970962;
+	--blue: #87fffb;
+	--blue-dark: #63ddd9;
+	--black: #171321;
+	--gray-light: #d4d0e0;
+	--gray-medium: #b1acb9;
+	--font-family: 'Archivo Black', sans-serif;
+	--background: var(--white);
+	--foreground: var(--black);
+	--footnote-hover: var(--pink-dark);
 }
 
 html{

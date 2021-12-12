@@ -19,12 +19,7 @@
 		<!-- NES.CSS -->
 		<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 		<link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
-    	<!-- <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" /> -->
-		<!-- latest -->
-		<!-- <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" /> -->
-		<!-- core style only -->
-		<!-- <link href="https://unpkg.com/nes.css/css/nes-core.min.css" rel="stylesheet" /> -->
-
+ 
 		<!-- Styles -->
 		<link rel="stylesheet" type="text/css" href="css/player.css">
 		<link rel="stylesheet" type="text/css" href="css/interface.css">
@@ -38,30 +33,51 @@
 			</div>
 			<div id="header">
 				<h1>Jogo da Velha</h1>
+				<div id="settings">
+			        <button class="gear" onclick="toggleSettingsBox()">
+			          <img src="img/gear.png">
+			        </button>
+			        <div id="settingsBox">
+						<h6 class="title">Configurações</h6 class="title">
+			        	<div class="container">
+				        	<div class="row">
+				        		<div class="col">
+					        		<p>Nível de profundidade da I.A.</p>
+					        		<label id="labelValueDepth"></label>
+					        		<input type="range" class="form-range" min="0" max="8" id="depthAI" value="8" onchange="onChangeAIDepth()">
+				        		</div>
+				        	</div>
+				        	<div class="row" style="margin-top: 2rem;">
+				        		<div class="col">
+				        			<button id="applySettingsBtn" class="nes-btn is-primary" onclick="applySettings()">Aplicar</button>
+				        		</div>
+				        	</div>
+			        	</div>
+			        </div>
+			    </div>
 			</div>
-			<div id="selectGameModeScreen" class="clearfix">
-				<div id="controlBar" class="btn-group-toggle" class="d-flex justify-content-center" role="group">
-					<div class="row justify-content-md-center align-items-end">
-						<div class="col-md-auto">
-							<button id="startBtn" onclick="startGame(event)" type="button" class="nes-btn is-disabled">Start</button>
-							<button id="goBackBtn" onclick="goBack()" type="button" class="nes-btn is-disabled">Cancelar</button>
-						</div>
-						<div class="col-md-auto">
-							<label id="gameModeBtn2">
-							  	<input type="radio" class="nes-radio" name="answer" onclick="setGameMode(2)"/>
-							  	<span><label class="one-friend-animated"></label>Jogar com um amigo</span>
-							</label>
-						</div>
-						<div class="col-md-auto">
-							<label id="gameModeBtn1" >
-							  	<input type="radio" class="nes-radio" name="answer" onclick="setGameMode(1)"/>
-							  	<span><label class="robotAI"></label> Desafiar IA</span>
-							</label>
-						</div>
+			<div id="controlBar" class="btn-group-toggle" class="d-flex justify-content-center" role="group">
+				<div class="row justify-content-md-center align-items-end">
+					<div class="col-md-auto">
+						<button id="startBtn" onclick="startGame(event)" type="button" class="nes-btn is-disabled">Start</button>
+						<button id="goBackBtn" onclick="goBack()" type="button" class="nes-btn is-disabled">Cancelar</button>
 					</div>
-					
-				  	
-					
+				</div>
+			</div>
+			<div id="selectGameModeScreen">
+				<div class="row justify-content-md-center align-items-end">
+					<div class="col col-md-auto">
+						<label id="gameModeBtn2">
+						  	<input type="radio" class="nes-radio" name="answer" onclick="setGameMode(2)"/>
+						  	<span><label class="one-friend-animated"></label>Jogar com um amigo</span>
+						</label>
+					</div>
+					<div class="col col-md-auto">
+						<label id="gameModeBtn1" >
+						  	<input type="radio" class="nes-radio" name="answer" onclick="setGameMode(1)"/>
+						  	<span><label class="robotAI"></label>Desafiar IA</span>
+						</label>
+					</div>
 				</div>
 			</div>
 			<!-- PLACAR -->
@@ -98,8 +114,13 @@
 			  <dialog class="nes-dialog" id="select-game-mode-modal">
 			    <form method="dialog">
 			      <p class="title">Alerta</p>
-			      <p>Você precisa escolher um modo de jogo ao lado.</p>
+			      <p class="message">
+			      	É necessário escolher um <big>modo de jogo</big>.
+			      	<br>Você pode jogar com um amigo ou sozinho(a).
+			      	</br>Tambem é um desafio tentar vencer nossa inteligência artificial.
+			      </p>
 			      <menu class="dialog-menu">
+			      	<button class="nes-btn">Entendi</button>
 			        <button class="nes-btn is-primary">OK</button>
 			      </menu>
 			    </form>
@@ -114,6 +135,18 @@
 			      <menu class="dialog-menu">
 			        <button class="nes-btn" onclick="goBack()">Cancelar Jogo</button>
 			        <button class="nes-btn is-primary" onclick="initGame()">Próximo Turno</button>
+			      </menu>
+			    </form>
+			  </dialog>
+			</section>
+			<!-- CONFIGURAÇÔES APLICADAS -->
+			<section>
+			  <dialog class="nes-dialog" id="applySettingsModal">
+			    <form method="dialog">
+			      <p class="title">Modificações</p>
+			      <p class="message"></p>
+			      <menu class="dialog-menu">
+			        <button class="nes-btn">OK</button>
 			      </menu>
 			    </form>
 			  </dialog>

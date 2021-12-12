@@ -10,6 +10,9 @@ var gameMode = ""; //1 = Player vs Computer; 2 = Player vs Player
 var score = {player1: 0, player2: 0};
 var isMinimaxRuning = false;
 
+// Pode ir de 0 até 8, pois é a quantidade de campos que temos (0-4 = Facil demais)(5-6 = Médio)(7-8 = Imbativel)
+var maxProfundidade = 8; 
+
 function getScore(){
 	return score;
 }
@@ -41,6 +44,7 @@ function setGameMode(newGameMode){
 
 	$("#startBtn").removeClass("is-disabled");
 	$("#startBtn").addClass("is-primary");
+	$("#startBtn").css("visibility", "visible");
 
 	if(newGameMode == 1){
 		$("#gameModeBtn1 span").css("color", "#0897db");
@@ -122,8 +126,8 @@ function setMoves(newMoves){
 	moves = newMoves;
 }
 
-var numTimesEnterFunction = 0;
 function minimax(newBoard, player, profundidade){
+	//Flag para controlar se a função ainda está na sua recursividade
 	isMinimaxRuning = true;
 	// console.log(numTimesEnterFunction++); //CONSOLE LOG DEIXA AS COISAS LENTAS
   	var availFields = getAvailableFields(newBoard);
@@ -153,14 +157,19 @@ function minimax(newBoard, player, profundidade){
 	 	// Definir o local vazio para o jogador atual
 	  	newBoard[availFields[i].row][availFields[i].col] = player;
 
-	  	// Se coletar a pontuação resultante da chamada do minimax no oponente do jogador atual
-	  	if (player == "O"){
-	    	var result = minimax(newBoard, "X", profundidade+1);
-	    	move.score = result.score;
-	  	}else{
-	    	var result = minimax(newBoard, "O", profundidade+1);
-	    	move.score = result.score;
-	  	}
+
+	  	if(profundidade+1 < maxProfundidade){
+		  	// Se coletar a pontuação resultante da chamada do minimax no oponente do jogador atual
+		  	if (player == "O"){
+		    	var result = minimax(newBoard, "X", profundidade+1);
+		    	move.score = result.score;
+		  	}else{
+		    	var result = minimax(newBoard, "O", profundidade+1);
+		    	move.score = result.score;
+		  	}
+		}else{
+			move.score = 0;
+		}
 
 	  	//Redefina o local para vazio
 	    newBoard[availFields[i].row][availFields[i].col] = "";

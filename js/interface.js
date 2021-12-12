@@ -99,10 +99,11 @@ function doMove(element){
 				}else{
 					//Se não existir mais campos
 					if(getAvailableFields(getMtx()).length == 0){
-						//Setando ultimo jogador como null
+						//Setando ultimo ganhador como null
 						setLastWinner(null);
 						//Trocando o jogador
 						toggleCurrentPlayer();
+						$(".overlay-loading").fadeOut();
 						showTieResult();
 					}else{
 						//Liberando a proxima jogada
@@ -126,12 +127,14 @@ function doMove(element){
 
 			// CAMPO PREENCHIDO
 			}else{
+				$(".overlay-loading").fadeOut();
 				console.log("Campo Preenchido");	
 				setIABlocked(true);
 				toggleCanClick();
 				return false;
 			}	
 		}else{
+			$(".overlay-loading").fadeOut();
 			console.log("Aguarde o processamento");
 			toggleCanClick();
 			setIABlocked(true);
@@ -189,10 +192,10 @@ function doMoveAI(){
 						toggleCurrentPlayer();
 						//Setando ultimo jogador como null
 						setLastWinner(null);
+						$(".overlay-loading").fadeOut();
 						if(getAvailableFields(getMtx()).length == 0){
 							showTieResult();	
 						}
-						$(".overlay-loading").fadeOut();
 					}
 				}, 600);
 			}else{
@@ -200,8 +203,8 @@ function doMoveAI(){
 				setLastWinner(null);
 				//Trocando o jogador
 				toggleCurrentPlayer();
-				showTieResult();
 				$(".overlay-loading").fadeOut();
+				showTieResult();
 			}
 		}, timeToThink); // Tempo para fazer a máquina esperar, quando é muito rápida o jogador se incomoda
 		
@@ -222,7 +225,7 @@ function setHighLightInScore(player){
 
 function showTieResult(){
 	$("#resultModal .message").html("<i class='nes-icon close'></i> Deu velha!");
-	document.getElementById('resultModal').showModal();
+	$("#resultModal").show();
 }
 
 function blinkElement(element) {

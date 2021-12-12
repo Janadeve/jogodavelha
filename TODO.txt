@@ -1,1 +1,12 @@
 - Criar uma lógica pra checar somente os campos filhos do nó, não precisamos 
+
+--Passos para melhorar a AI
+["O", "X", "X"]
+["O", "", "X"]
+["", "", ""]
+
+
+
+setCurrentCoordinates(2,1); <- Ultima jogada que eu fiz
+setCurrentPlayer("O") 		<- Dando a permissão pra IA jogar
+doMoveAI(getMtx(), "O");	<- Mandando ela rodar

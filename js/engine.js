@@ -1,10 +1,14 @@
 // var mtx = [["O", "", "O"],["O", "X", "O"],["X", "", "X"]]; // - Matrix of round game
-var mtx = [["", "", ""],["", "", ""],["", "", ""]]; // - Matrix of round game
+var mtx = [	["", "", ""],
+			["", "", ""],
+			["", "", ""]]; // - Matrix of round game
+
 var currentPlayer = 'X';
 var IABlocked = false;
 var lastWinner = null;
 var gameMode = ""; //1 = Player vs Computer; 2 = Player vs Player
 var score = {player1: 0, player2: 0};
+var isMinimaxRuning = false;
 
 function getScore(){
 	return score;
@@ -97,7 +101,7 @@ function getAvailableFields(newBoard){
 	newBoard.forEach(function(item){
 		item.forEach(function(subItem){
 			if(subItem == ""){
-				myAvailFields.push({"row": row, "col": col, "idx": cont});
+				myAvailFields.push({"row": row, "col": col});
 			}
 			col++;
 			cont++;
@@ -120,6 +124,7 @@ function setMoves(newMoves){
 
 var numTimesEnterFunction = 0;
 function minimax(newBoard, player){
+	isMinimaxRuning = true;
 	// console.log(numTimesEnterFunction++); //CONSOLE LOG DEIXA AS COISAS LENTAS
   	var availFields = getAvailableFields(newBoard);
   	//Essa verificação faz economizar processamento
@@ -137,13 +142,13 @@ function minimax(newBoard, player){
 	// Percorrer os locais disponíveis
 	for (var i = 0; i < availFields.length; i++){
 		let auxMoves = getMoves();
-		//Crie um objeto para cada um e armazene o índice desse ponto que foi armazenado como um número na chave de índice do objeto
+		//Crie um objeto para cada um e armazene o índice desse 
+		//ponto que foi armazenado como um número na chave de índice do objeto
 	  	var move = {};
 	  	move.coordinates = {row: "", col: ""};
 	  	move.coordinates.row = availFields[i].row;
 	  	move.coordinates.col = availFields[i].col;
 	  	setCurrentCoordinates(move.coordinates.col, move.coordinates.row);
-	  	move.idx = availFields[i].idx;
 
 	 	// Definir o local vazio para o jogador atual
 	  	newBoard[availFields[i].row][availFields[i].col] = player;
@@ -186,7 +191,7 @@ function minimax(newBoard, player){
       		}
    		 }
   	}
-
+  	isMinimaxRuning = false;
   	return bestMove;
 }
 
@@ -225,7 +230,6 @@ function initGame(){
 			}, 600);
 		}
 	}
-	console.log(score);
 }
 
 function initGameMatrix(){
@@ -264,14 +268,21 @@ function hasDiagonalSequence(newBoard, player){
 function hasSequence(newBoard, player){
 	var success = false;
 
-	success = hasHorizontalSequence(newBoard, player);
+	// Caso seja o minimax que esteja testando mandamos ele para a função
+	// que testa todas as possibilidades. 
+	// Caso não fazemos uma verificação com menos processamento  
+	if(isMinimaxRuning){
+		success = hasWinnerMiniMax(newBoard, player)
+	}else{
+		success = hasHorizontalSequence(newBoard, player);
 
-	if(success == false){
-		success = hasVerticalSequence(newBoard, player);
-	}
+		if(success == false){
+			success = hasVerticalSequence(newBoard, player);
+		}
 
-	if(success == false){
-		success = hasDiagonalSequence(newBoard, player);
+		if(success == false){
+			success = hasDiagonalSequence(newBoard, player);
+		}
 	}
 
 	return success;
@@ -286,4 +297,25 @@ function hasWinner(newBoard, player){
 	}else{
 		return false;
 	}	
+}
+
+
+//Função que buscar em todas as possibilidades.
+//Ela é necessária para o algoritmo MINIMAX fazer
+//todas as suas simulações.
+function hasWinnerMiniMax(board, player){
+if (
+ 	(board[0][0] == player && board[0][1] == player && board[0][2] == player) ||
+ 	(board[1][0] == player && board[1][1] == player && board[1][2] == player) ||
+ 	(board[2][0] == player && board[2][1] == player && board[2][2] == player) ||
+ 	(board[0][0] == player && board[1][0] == player && board[2][0] == player) ||
+ 	(board[0][1] == player && board[1][1] == player && board[2][1] == player) ||
+ 	(board[0][2] == player && board[1][2] == player && board[2][2] == player) ||
+ 	(board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
+ 	(board[2][0] == player && board[1][1] == player && board[0][2] == player)
+ ){
+ 	return true;
+ }else{
+ 	return false;
+ }
 }

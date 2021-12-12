@@ -29,7 +29,7 @@
 #player{
 	display: block;
 	position: relative;
-	margin: 0.5rem auto;
+	margin: 2rem auto;
 	width: 25em;
 	height: 25em;
 }
@@ -106,8 +106,8 @@
 
 @media all and (orientation: portrait) {
   #player {
-     width: calc(75vw - 20px);
-     height: calc(75vw - 20px);
+     width: calc(80vw - 20px);
+     height: calc(80vw - 20px);
      margin-top: 3rem;
   }
 }

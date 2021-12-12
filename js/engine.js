@@ -45,6 +45,7 @@ function setGameMode(newGameMode){
 	$("#startBtn").removeClass("is-disabled");
 	$("#startBtn").addClass("is-primary");
 	$("#startBtn").css("visibility", "visible");
+	$("#startBtn").addClass("blink");
 
 	if(newGameMode == 1){
 		$("#gameModeBtn1 span").css("color", "#0897db");
@@ -53,6 +54,8 @@ function setGameMode(newGameMode){
 		$("#gameModeBtn1 span").css("color", "#22223D");
 		$("#gameModeBtn2 span").css("color", "#0897db");
 	}
+
+
 
 	$("#player").css("pointer-events", "auto");
 

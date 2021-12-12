@@ -112,11 +112,25 @@ footer p a{
   to {opacity: 0.0;}
 }
 
-.blink{
+@-webkit-keyframes blinker-inverse {
+  from {opacity: 0.0;}
+  to {opacity: 1.0;}
+}
+
+.blink-infinite{
 	text-decoration: blink;
 	-webkit-animation-name: blinker;
 	-webkit-animation-duration: 1.5s;
 	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:ease-in-out;
+	-webkit-animation-direction: alternate;
+}
+
+.blink{
+	text-decoration: blink;
+	-webkit-animation-name: blinker-inverse;
+	-webkit-animation-duration: 0.8s;
+	-webkit-animation-iteration-count: 3;
 	-webkit-animation-timing-function:ease-in-out;
 	-webkit-animation-direction: alternate;
 }

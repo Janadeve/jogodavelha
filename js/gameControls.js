@@ -29,7 +29,7 @@ function startGame(event){
 		//Trocando a visualização dos botões (cancelar / start)
 		$("#goBackBtn").show()
 		$("#startBtn").hide()
-
+		
 		//Escondendo a seleção do tipo de jogo (sozinho ou vs IA)
 		$("#selectGameModeScreen").hide();
 

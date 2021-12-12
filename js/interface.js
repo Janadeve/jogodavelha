@@ -218,11 +218,11 @@ function doMoveAI(){
 
 function setHighLightInScore(player){
 	if(player == 'X'){
-		$("#player1Name").addClass("currentPlayerNameScore blink");
-		$("#player2Name").removeClass("currentPlayerNameScore blink");
+		$("#player1Name").addClass("currentPlayerNameScore blink-infinite");
+		$("#player2Name").removeClass("currentPlayerNameScore blink-infinite");
 	}else if(player == 'O'){
-		$("#player1Name").removeClass("currentPlayerNameScore blink");
-		$("#player2Name").addClass("currentPlayerNameScore blink");
+		$("#player1Name").removeClass("currentPlayerNameScore blink-infinite");
+		$("#player2Name").addClass("currentPlayerNameScore blink-infinite");
 	}
 }
 

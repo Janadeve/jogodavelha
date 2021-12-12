@@ -40,14 +40,14 @@ function setGameMode(newGameMode){
 	gameMode = newGameMode;
 
 	$("#startBtn").removeClass("is-disabled");
-	$("#startBtn").addClass("is-success");
+	$("#startBtn").addClass("is-primary");
 
 	if(newGameMode == 1){
-		$("#gameModeBtn1 span").css("color", "#4AA52E");
+		$("#gameModeBtn1 span").css("color", "#0897db");
 		$("#gameModeBtn2 span").css("color", "#22223D");
 	}else if(newGameMode == 2){
 		$("#gameModeBtn1 span").css("color", "#22223D");
-		$("#gameModeBtn2 span").css("color", "#4AA52E");
+		$("#gameModeBtn2 span").css("color", "#0897db");
 	}
 
 	$("#player").css("pointer-events", "auto");

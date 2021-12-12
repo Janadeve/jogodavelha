@@ -17,7 +17,7 @@ function startGame(event){
 		$("#gameModeBtn1 input, #gameModeBtn2 input").attr('disabled','disabled');
 
 		//Inativando o botão de start 
-		$("#startBtn").removeClass('is-success');
+		$("#startBtn").removeClass('is-primary');
 		$("#startBtn").addClass('is-disabled');
 
 		//Ativando o botão de cancelar

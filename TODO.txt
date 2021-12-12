@@ -10,3 +10,7 @@
 setCurrentCoordinates(2,1); <- Ultima jogada que eu fiz
 setCurrentPlayer("O") 		<- Dando a permissão pra IA jogar
 doMoveAI(getMtx(), "O");	<- Mandando ela rodar
+
+
+- Ter a possibilidade de aumentar o tamanho da matrix (sempre quadrada) - pode fazer parte da dificuldade
+- Controlar a habilidade da IA pela limitação da profundidade do MINIMAX

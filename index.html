@@ -41,16 +41,27 @@
 			</div>
 			<div id="selectGameModeScreen" class="clearfix">
 				<div id="controlBar" class="btn-group-toggle" class="d-flex justify-content-center" role="group">
-					<button id="startBtn" onclick="startGame(event)" type="button" class="nes-btn is-disabled">Start</button>
-					<button id="goBackBtn" onclick="goBack()" type="button" class="nes-btn is-disabled">Cancelar</button>
-				  	<label id="gameModeBtn2">
-					  <input type="radio" class="nes-radio" name="answer" onclick="setGameMode(2)"/>
-					  <span>Jogar com um amigo</span>
-					</label>
-					<label id="gameModeBtn1" >
-					  <input type="radio" class="nes-radio" name="answer" onclick="setGameMode(1)"/>
-					  <span>Enfrentar IA</span>
-					</label>
+					<div class="row justify-content-md-center align-items-end">
+						<div class="col-md-auto">
+							<button id="startBtn" onclick="startGame(event)" type="button" class="nes-btn is-disabled">Start</button>
+							<button id="goBackBtn" onclick="goBack()" type="button" class="nes-btn is-disabled">Cancelar</button>
+						</div>
+						<div class="col-md-auto">
+							<label id="gameModeBtn2">
+							  	<input type="radio" class="nes-radio" name="answer" onclick="setGameMode(2)"/>
+							  	<span><label class="one-friend-animated"></label>Jogar com um amigo</span>
+							</label>
+						</div>
+						<div class="col-md-auto">
+							<label id="gameModeBtn1" >
+							  	<input type="radio" class="nes-radio" name="answer" onclick="setGameMode(1)"/>
+							  	<span><label class="robotAI"></label> Desafiar IA</span>
+							</label>
+						</div>
+					</div>
+					
+				  	
+					
 				</div>
 			</div>
 			<!-- PLACAR -->

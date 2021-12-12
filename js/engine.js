@@ -123,16 +123,16 @@ function setMoves(newMoves){
 }
 
 var numTimesEnterFunction = 0;
-function minimax(newBoard, player){
+function minimax(newBoard, player, profundidade){
 	isMinimaxRuning = true;
 	// console.log(numTimesEnterFunction++); //CONSOLE LOG DEIXA AS COISAS LENTAS
   	var availFields = getAvailableFields(newBoard);
   	//Essa verificação faz economizar processamento
   	//Antes percorria toda a matriz mesmo quando achava a sequencia
   	if (hasSequence(newBoard, "X")){
-     	return {score:-10};
+     	return {score:-10 + profundidade};
   	}else if (hasSequence(newBoard, "O")){
-    	return {score:10};
+    	return {score:10 - profundidade};
   	}else if (availFields.length === 0){
     	return {score:0};
   	}
@@ -155,10 +155,10 @@ function minimax(newBoard, player){
 
 	  	// Se coletar a pontuação resultante da chamada do minimax no oponente do jogador atual
 	  	if (player == "O"){
-	    	var result = minimax(newBoard, "X");
+	    	var result = minimax(newBoard, "X", profundidade+1);
 	    	move.score = result.score;
 	  	}else{
-	    	var result = minimax(newBoard, "O");
+	    	var result = minimax(newBoard, "O", profundidade+1);
 	    	move.score = result.score;
 	  	}
 

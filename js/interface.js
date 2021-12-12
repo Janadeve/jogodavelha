@@ -167,7 +167,7 @@ function doMoveAI(){
 			//Caso tenha campos disponiveis
 			if(getAvailableFields(getMtx())){
 				//Procura a melhor jogada
-				bestCoordinates = minimax(auxMtx, "O").coordinates;
+				bestCoordinates = minimax(auxMtx, "O", 0).coordinates;
 
 				//Retirando o Loading
 				$(".overlay-loading").fadeOut();
